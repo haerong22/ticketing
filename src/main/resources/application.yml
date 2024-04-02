@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ticketing
+  jackson:
+    property-naming-strategy: SNAKE_CASE
