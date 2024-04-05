@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.domain.common
 
-interface ErrorCode {
+interface ResponseCode {
     val code: Int
     val msg: String
 }

@@ -18,7 +18,7 @@ class ApiControllerAdvice {
     )
     fun handleBadRequestException(e: CustomException): CommonResponse<Any> {
         log.warn("CustomException : {}", e.msg)
-        return CommonResponse.error(e.errorCode, e.msg)
+        return CommonResponse.error(e.responseCode, e.msg)
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -1,7 +1,7 @@
 package io.haerong22.ticketing.api
 
-import io.haerong22.ticketing.domain.common.CommonErrorCode
-import io.haerong22.ticketing.domain.common.ErrorCode
+import io.haerong22.ticketing.domain.common.CommonResponseCode
+import io.haerong22.ticketing.domain.common.ResponseCode
 
 data class CommonResponse<T>(
     var code: Int,
@@ -13,7 +13,7 @@ data class CommonResponse<T>(
 
         @JvmStatic
         fun <T> ok(): CommonResponse<T> {
-            return process(CommonErrorCode.SUCCESS.code, CommonErrorCode.SUCCESS.msg, null)
+            return process(CommonResponseCode.SUCCESS.code, CommonResponseCode.SUCCESS.msg, null)
         }
 
         @JvmStatic
@@ -22,13 +22,13 @@ data class CommonResponse<T>(
         }
 
         @JvmStatic
-        fun <T> error(errorCode: ErrorCode): CommonResponse<T> {
-            return process(errorCode.code, errorCode.msg, null)
+        fun <T> error(responseCode: ResponseCode): CommonResponse<T> {
+            return process(responseCode.code, responseCode.msg, null)
         }
 
         @JvmStatic
-        fun <T> error(errorCode: ErrorCode, message: String): CommonResponse<T> {
-            return process(errorCode.code, message, null)
+        fun <T> error(responseCode: ResponseCode, message: String): CommonResponse<T> {
+            return process(responseCode.code, message, null)
         }
 
         @JvmStatic
