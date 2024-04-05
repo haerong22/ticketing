@@ -1,0 +1,10 @@
+### 유저 포인트 조회
+GET http://localhost:8080/api/users/1/point
+
+### 유저 포인트 충전
+PATCH http://localhost:8080/api/users/1/point
+Content-Type: application/json
+
+{
+  "amount": 10000
+}

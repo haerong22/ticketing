@@ -1,0 +1,21 @@
+### 공연 리스트 조회
+GET http://localhost:8080/api/performances
+wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
+
+### 공연 날짜 리스트 조회
+GET http://localhost:8080/api/performances/1
+wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
+
+### 공연 좌석 조회
+GET http://localhost:8080/api/performances/1/seats
+wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
+
+### 공연 좌석 예약
+POST http://localhost:8080/api/performances/1/reservation
+Content-Type: application/json
+wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
+
+{
+  "user_id": 1,
+  "seat_no": 5
+}

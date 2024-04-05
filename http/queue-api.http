@@ -1,0 +1,10 @@
+### 대기열 진입
+POST http://localhost:8080/api/queue/enter
+
+### 대기열 확인
+GET http://localhost:8080/api/queue/check
+wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
+
+### 대기열 삭제
+DELETE http://localhost:8080/api/queue/exit
+wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
