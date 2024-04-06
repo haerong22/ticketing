@@ -1,4 +1,4 @@
-package io.haerong22.ticketing.api
+package io.haerong22.ticketing.interfaces
 
 import io.haerong22.ticketing.domain.common.BadRequestException
 import io.haerong22.ticketing.domain.common.CustomException
