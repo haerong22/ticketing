@@ -7,4 +7,7 @@ class UserReader(
     private val userRepository: UserRepository,
 ) {
 
+    fun getUserById(userId: Long) : User {
+        return userRepository.getUserById(userId)
+    }
 }
