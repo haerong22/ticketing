@@ -1,4 +1,4 @@
-package io.haerong22.ticketing.infrastructure.user
+package io.haerong22.ticketing.infrastructure.db.user
 
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserRepository
