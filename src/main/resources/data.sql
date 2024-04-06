@@ -1,0 +1,1 @@
+INSERT INTO users(name, point, created_at, updated_at) VALUES ('유저1', 0, now(), now())

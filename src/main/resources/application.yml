@@ -1,5 +1,29 @@
+server:
+  shutdown: graceful
+
 spring:
   application:
     name: ticketing
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:ticketing;MODE=MySQL;DATABASE_TO_LOWER=TRUE;
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+    show-sql: true
+    defer-datasource-initialization: true
