@@ -1,6 +1,6 @@
-package io.haerong22.ticketing.infrastructure.user
+package io.haerong22.ticketing.infrastructure.db.user
 
-import io.haerong22.ticketing.infrastructure.db.user.UserJpaRepository
+import io.haerong22.ticketing.infrastructure.DbTestSupport
 import org.junit.jupiter.api.Test
 
 class UserJpaRepositoryTest(
@@ -11,4 +11,5 @@ class UserJpaRepositoryTest(
     fun connection() {
         userJpaRepository.count()
     }
+
 }

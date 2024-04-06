@@ -1,4 +1,4 @@
-package io.haerong22.ticketing.infrastructure.user
+package io.haerong22.ticketing.infrastructure
 
 import io.haerong22.ticketing.DbCleanup
 import io.haerong22.ticketing.infrastructure.db.config.JpaConfig
