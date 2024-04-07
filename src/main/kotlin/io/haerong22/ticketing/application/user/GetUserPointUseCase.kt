@@ -10,7 +10,7 @@ class GetUserPointUseCase(
     private val userReader: UserReader,
 ) {
 
-    operator fun invoke(command: GetUserPointCommand) : User {
+    operator fun invoke(command: GetUserPointCommand): User {
         return userReader.getUserById(command.userId)
     }
 }

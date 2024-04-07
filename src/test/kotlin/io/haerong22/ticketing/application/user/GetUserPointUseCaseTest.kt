@@ -5,8 +5,8 @@ import io.haerong22.ticketing.application.user.command.GetUserPointCommand
 import io.haerong22.ticketing.domain.user.UserException
 import io.haerong22.ticketing.infrastructure.db.user.UserEntity
 import io.haerong22.ticketing.infrastructure.db.user.UserJpaRepository
-import org.assertj.core.api.Assertions.*
-import org.junit.jupiter.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class GetUserPointUseCaseTest(
