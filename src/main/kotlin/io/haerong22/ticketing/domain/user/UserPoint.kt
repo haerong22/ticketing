@@ -2,7 +2,6 @@ package io.haerong22.ticketing.domain.user
 
 import io.haerong22.ticketing.domain.common.BadRequestException
 import io.haerong22.ticketing.domain.common.CommonResponseCode.BAD_REQUEST
-import io.haerong22.ticketing.domain.user.UserResponseCode.NOT_ENOUGH_BALANCE
 
 data class UserPoint(
     val amount: Int,
