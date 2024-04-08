@@ -2,11 +2,16 @@ package io.haerong22.ticketing.stub
 
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserPoint
-import io.haerong22.ticketing.domain.user.UserRepository
+import io.haerong22.ticketing.domain.user.UserReaderRepository
 
-class UserRepositoryStub : UserRepository {
+class UserReaderRepositoryStub : UserReaderRepository {
 
     override fun getUserById(userId: Long): User {
         return User(1L, "유저1", UserPoint(10000))
     }
+
+    override fun getUserByIdWithLock(userId: Long): User {
+        return User(1L, "유저1", UserPoint(10000))
+    }
+
 }
