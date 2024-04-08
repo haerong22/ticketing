@@ -4,10 +4,14 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserReader(
-    private val userRepository: UserRepository,
+    private val userReaderRepository: UserReaderRepository,
 ) {
 
     fun getUserById(userId: Long) : User {
-        return userRepository.getUserById(userId)
+        return userReaderRepository.getUserById(userId)
+    }
+
+    fun getUserByIdWithLock(userId: Long) : User {
+        return userReaderRepository.getUserByIdWithLock(userId)
     }
 }

@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
 
-@Import(UserRepositoryImpl::class)
-class UserRepositoryImplTest(
-    private val userRepositoryImpl: UserRepositoryImpl,
+@Import(UserReaderRepositoryImpl::class)
+class UserReaderRepositoryImplTest(
+    private val userRepositoryImpl: UserReaderRepositoryImpl,
     private val userJpaRepository: UserJpaRepository,
 ) : DbTestSupport() {
 

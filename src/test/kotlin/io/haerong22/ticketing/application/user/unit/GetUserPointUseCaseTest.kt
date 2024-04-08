@@ -3,7 +3,7 @@ package io.haerong22.ticketing.application.user.unit
 import io.haerong22.ticketing.application.user.GetUserPointUseCase
 import io.haerong22.ticketing.application.user.command.GetUserPointCommand
 import io.haerong22.ticketing.domain.user.UserReader
-import io.haerong22.ticketing.stub.UserRepositoryStub
+import io.haerong22.ticketing.stub.UserReaderRepositoryStub
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,7 +12,7 @@ class GetUserPointUseCaseTest {
     @Test
     fun `유저 포인트를 조회한다`() {
         // given
-        val userRepository = UserRepositoryStub()
+        val userRepository = UserReaderRepositoryStub()
         val userReader = UserReader(userRepository)
         val useCase = GetUserPointUseCase(userReader)
 
