@@ -8,13 +8,16 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserStoreRepositoryImpl(
     private val userJpaRepository: UserJpaRepository,
+    private val pointHistoryJpaRepository: PointHistoryJpaRepository,
 ) : UserStoreRepository {
 
     override fun saveUser(user: User): User {
-        TODO("Not yet implemented")
+        val userEntity = UserEntity.of(user)
+        return userJpaRepository.save(userEntity).toDomain()
     }
 
     override fun saveUserPointHistory(user: User, userPointHistory: UserPointHistory): UserPointHistory {
-        TODO("Not yet implemented")
+        val pointHistoryEntity = PointHistoryEntity.of(user, userPointHistory)
+        return pointHistoryJpaRepository.save(pointHistoryEntity).toDomain()
     }
 }

@@ -13,6 +13,17 @@ class UserEntity(
     val point: Int,
 ) : BaseEntity() {
 
+    companion object {
+
+        fun of(user: User): UserEntity {
+            return UserEntity(
+                name = user.name,
+                point = user.point.amount,
+            )
+                .apply { this.id = user.userId }
+        }
+    }
+
     fun toDomain(): User {
         return User(
             userId = id!!,
