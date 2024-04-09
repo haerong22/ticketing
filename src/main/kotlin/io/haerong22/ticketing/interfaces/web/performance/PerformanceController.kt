@@ -1,6 +1,8 @@
 package io.haerong22.ticketing.interfaces.web.performance
 
+import io.haerong22.ticketing.application.performance.GetPerformanceInfoListUseCase
 import io.haerong22.ticketing.domain.common.PageInfo
+import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.interfaces.web.CommonResponse
 import io.haerong22.ticketing.interfaces.web.performance.request.ReserveSeatRequest
 import io.haerong22.ticketing.interfaces.web.performance.response.*
@@ -9,19 +11,22 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/performances")
-class PerformanceController {
+class PerformanceController(
+    private val getPerformanceInfoListUseCase: GetPerformanceInfoListUseCase,
+) {
 
     @GetMapping
     fun getPerformanceInfoList(
         @RequestHeader("wq-token") token: String,
+        @RequestParam("page_no") pageNo: Int,
+        @RequestParam("page_size") pageSize: Int,
     ): CommonResponse<PerformanceInfoListResponse> {
+        val result = getPerformanceInfoListUseCase(Pageable(pageNo, pageSize))
+
         return CommonResponse.ok(
             PerformanceInfoListResponse(
-                listOf(
-                    PerformanceInfo(1, "콘서트 제목!!", "콘서트 내용!!"),
-                    PerformanceInfo(2, "콘서트 제목2!!", "콘서트 내용2!!"),
-                ),
-                PageInfo(1, 5, 10L)
+                result.list.map { Element.toResponse(it) },
+                result.pageInfo
             )
         )
     }
