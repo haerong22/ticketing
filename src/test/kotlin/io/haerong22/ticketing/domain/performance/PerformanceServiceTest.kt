@@ -14,10 +14,10 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
 @ExtendWith(MockitoExtension::class)
-class PerformanceReaderTest {
+class PerformanceServiceTest {
 
     @InjectMocks
-    lateinit var sut: PerformanceReader
+    lateinit var sut: PerformanceService
 
     @Mock
     lateinit var performanceReaderRepository: PerformanceReaderRepository

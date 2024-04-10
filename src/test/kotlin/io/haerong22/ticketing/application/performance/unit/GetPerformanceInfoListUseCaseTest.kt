@@ -5,9 +5,8 @@ import io.haerong22.ticketing.domain.common.PageInfo
 import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.domain.common.WithPage
 import io.haerong22.ticketing.domain.performance.PerformanceInfo
-import io.haerong22.ticketing.domain.performance.PerformanceReader
+import io.haerong22.ticketing.domain.performance.PerformanceService
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.groups.Tuple.tuple
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -24,7 +23,7 @@ class GetPerformanceInfoListUseCaseTest {
     private lateinit var sut: GetPerformanceInfoListUseCase
 
     @Mock
-    private lateinit var performanceReader: PerformanceReader
+    private lateinit var performanceService: PerformanceService
 
     @Test
     fun `공연 정보 리스트 조회`() {
@@ -37,13 +36,13 @@ class GetPerformanceInfoListUseCaseTest {
         )
         val expected = WithPage(list, pageInfo)
 
-        given(performanceReader.getPerformanceInfoList(pageable)).willReturn(expected)
+        given(performanceService.getPerformanceInfoList(pageable)).willReturn(expected)
 
         // when
         val result = sut(pageable)
 
         // then
-        verify(performanceReader, times(1)).getPerformanceInfoList(pageable)
+        verify(performanceService, times(1)).getPerformanceInfoList(pageable)
         assertThat(result.list).hasSize(2)
         assertThat(result.pageInfo).isEqualTo(pageInfo)
     }

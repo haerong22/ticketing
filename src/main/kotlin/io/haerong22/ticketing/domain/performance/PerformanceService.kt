@@ -5,7 +5,7 @@ import io.haerong22.ticketing.domain.common.WithPage
 import org.springframework.stereotype.Component
 
 @Component
-class PerformanceReader(
+class PerformanceService(
     private val performanceReaderRepository: PerformanceReaderRepository,
 ) {
 
