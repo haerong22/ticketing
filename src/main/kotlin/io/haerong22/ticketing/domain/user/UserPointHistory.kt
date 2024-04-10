@@ -6,12 +6,4 @@ class UserPointHistory(
     val amount: Int,
     val type: TransactionType
 ) {
-
-    companion object {
-
-        fun createChargeHistory(amount: Int) : UserPointHistory {
-            return UserPointHistory(amount, TransactionType.CHARGE)
-        }
-    }
-
 }

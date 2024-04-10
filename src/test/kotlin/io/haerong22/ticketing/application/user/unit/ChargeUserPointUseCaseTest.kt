@@ -2,9 +2,10 @@ package io.haerong22.ticketing.application.user.unit
 
 import io.haerong22.ticketing.application.user.ChargeUserPointUseCase
 import io.haerong22.ticketing.application.user.command.ChargeUserPointCommand
-import io.haerong22.ticketing.domain.user.*
-import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.*
+import io.haerong22.ticketing.domain.user.User
+import io.haerong22.ticketing.domain.user.UserPoint
+import io.haerong22.ticketing.domain.user.UserService
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -22,13 +23,7 @@ class ChargeUserPointUseCaseTest {
     private lateinit var sut: ChargeUserPointUseCase
 
     @Mock
-    private lateinit var userReader: UserReader
-
-    @Mock
-    private lateinit var userModifier: UserModifier
-
-    @Mock
-    private lateinit var userPointHistoryAppender: UserPointHistoryAppender
+    private lateinit var userService: UserService
 
     @Test
     fun `유저 포인트를 충전한다`() {
@@ -38,16 +33,13 @@ class ChargeUserPointUseCaseTest {
 
         val command = ChargeUserPointCommand(1L, 10000)
 
-        given(userReader.getUserByIdWithLock(1L)).willReturn(user)
-        given(userModifier.updateUserPoint(any(), any())).willReturn(expected)
+        given(userService.chargePoint(command.userId, command.amount)).willReturn(expected)
 
         // when
         val result = sut(command)
 
         // then
-        verify(userReader, times(1)).getUserByIdWithLock(any())
-        verify(userModifier, times(1)).updateUserPoint(any(), any())
-        verify(userPointHistoryAppender, times(1)).append(any(), any())
+        verify(userService, times(1)).chargePoint(any(), any())
 
         assertThat(result).isEqualTo(expected)
     }

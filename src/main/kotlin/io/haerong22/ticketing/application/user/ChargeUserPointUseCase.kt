@@ -1,22 +1,16 @@
 package io.haerong22.ticketing.application.user
 
 import io.haerong22.ticketing.application.user.command.ChargeUserPointCommand
-import io.haerong22.ticketing.domain.user.*
+import io.haerong22.ticketing.domain.user.User
+import io.haerong22.ticketing.domain.user.UserService
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
-@Transactional
 @Service
 class ChargeUserPointUseCase(
-    private val userReader: UserReader,
-    private val userModifier: UserModifier,
-    private val userPointHistoryAppender: UserPointHistoryAppender,
+    private val userService: UserService,
 ) {
 
     operator fun invoke(command: ChargeUserPointCommand) : User {
-        val user = userReader.getUserByIdWithLock(command.userId)
-        val updated = userModifier.updateUserPoint(user, command.amount)
-        userPointHistoryAppender.append(user, command.amount)
-        return updated
+        return userService.chargePoint(command.userId, command.amount)
     }
 }

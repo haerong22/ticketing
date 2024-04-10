@@ -10,7 +10,7 @@ class UserReaderRepositoryStub : UserReaderRepository {
         return User(1L, "유저1", UserPoint(10000))
     }
 
-    override fun getUserByIdWithLock(userId: Long): User {
+    override fun getUserByIdWithPessimisticLock(userId: Long): User {
         return User(1L, "유저1", UserPoint(10000))
     }
 

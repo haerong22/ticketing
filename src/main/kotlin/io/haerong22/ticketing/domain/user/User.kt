@@ -6,7 +6,7 @@ class User(
     val point: UserPoint,
 ) {
 
-    fun chargeUserPoint(amount: Int): User {
+    fun chargePoint(amount: Int): User {
         return User(
             userId = userId,
             name = name,

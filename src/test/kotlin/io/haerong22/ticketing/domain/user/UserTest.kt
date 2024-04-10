@@ -12,7 +12,7 @@ class UserTest {
         val chargeAmount = 10000
 
         // when
-        val result = user.chargeUserPoint(chargeAmount)
+        val result = user.chargePoint(chargeAmount)
 
         // then
         assertThat(result.userId).isEqualTo(1L)

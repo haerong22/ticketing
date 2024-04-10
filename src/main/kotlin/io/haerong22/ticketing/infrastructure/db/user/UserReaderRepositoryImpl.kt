@@ -17,7 +17,7 @@ class UserReaderRepositoryImpl(
             .toDomain()
     }
 
-    override fun getUserByIdWithLock(userId: Long): User {
+    override fun getUserByIdWithPessimisticLock(userId: Long): User {
         return userJpaRepository.findByIdForUpdate(userId)
             .orElseThrow { throw UserException(NOT_FOUND_USER) }
             .toDomain()
