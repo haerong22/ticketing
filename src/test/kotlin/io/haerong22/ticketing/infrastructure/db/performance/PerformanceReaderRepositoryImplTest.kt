@@ -9,20 +9,20 @@ import org.springframework.context.annotation.Import
 @Import(PerformanceReaderRepositoryImpl::class)
 class PerformanceReaderRepositoryImplTest(
     private val performanceReaderRepositoryImpl: PerformanceReaderRepositoryImpl,
-    private val performanceInfoJpaRepository: PerformanceInfoJpaRepository,
+    private val performanceJpaRepository: PerformanceJpaRepository,
 ) : DbTestSupport() {
 
     @Test
     fun `공연 정보를 조회 할 수 있다`() {
         // given
-        performanceInfoJpaRepository.save(PerformanceInfoEntity("공연1", "내용1"))
-        performanceInfoJpaRepository.save(PerformanceInfoEntity("공연2", "내용2"))
-        performanceInfoJpaRepository.save(PerformanceInfoEntity("공연3", "내용3"))
+        performanceJpaRepository.save(PerformanceEntity("공연1", "내용1"))
+        performanceJpaRepository.save(PerformanceEntity("공연2", "내용2"))
+        performanceJpaRepository.save(PerformanceEntity("공연3", "내용3"))
 
         val pageable = Pageable(1, 1)
 
         // when
-        val result = performanceReaderRepositoryImpl.getPerformanceInfoList(pageable)
+        val result = performanceReaderRepositoryImpl.getPerformanceList(pageable)
 
         // then
         assertThat(result.list).hasSize(1)
@@ -39,14 +39,14 @@ class PerformanceReaderRepositoryImplTest(
     @Test
     fun `공연 정보가 없으면 빈 리스트를 응답한다`() {
         // given
-        performanceInfoJpaRepository.save(PerformanceInfoEntity("공연1", "내용1"))
-        performanceInfoJpaRepository.save(PerformanceInfoEntity("공연2", "내용2"))
-        performanceInfoJpaRepository.save(PerformanceInfoEntity("공연3", "내용3"))
+        performanceJpaRepository.save(PerformanceEntity("공연1", "내용1"))
+        performanceJpaRepository.save(PerformanceEntity("공연2", "내용2"))
+        performanceJpaRepository.save(PerformanceEntity("공연3", "내용3"))
 
         val pageable = Pageable(2, 5)
 
         // when
-        val result = performanceReaderRepositoryImpl.getPerformanceInfoList(pageable)
+        val result = performanceReaderRepositoryImpl.getPerformanceList(pageable)
 
         // then
         assertThat(result.list).isEmpty()

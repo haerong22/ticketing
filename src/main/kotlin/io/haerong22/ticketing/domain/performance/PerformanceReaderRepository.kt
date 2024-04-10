@@ -5,5 +5,5 @@ import io.haerong22.ticketing.domain.common.WithPage
 
 interface PerformanceReaderRepository {
 
-    fun getPerformanceInfoList(pageable: Pageable) : WithPage<PerformanceInfo>
+    fun getPerformanceList(pageable: Pageable) : WithPage<Performance>
 }

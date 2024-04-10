@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.interfaces.web.performance
 
-import io.haerong22.ticketing.application.performance.GetPerformanceInfoListUseCase
+import io.haerong22.ticketing.application.performance.GetPerformanceListUseCase
 import io.haerong22.ticketing.domain.common.PageInfo
 import io.haerong22.ticketing.domain.common.WithPage
 import io.haerong22.ticketing.interfaces.web.WebTestSupport
@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class PerformanceControllerTest() : WebTestSupport() {
 
     @MockBean
-    lateinit var getPerformanceInfoListUseCase: GetPerformanceInfoListUseCase
+    lateinit var getPerformanceListUseCase: GetPerformanceListUseCase
 
     @Test
     fun `공연 리스트 조회 성공`() {
@@ -28,7 +28,7 @@ class PerformanceControllerTest() : WebTestSupport() {
         val pageSize = 2
         val pageInfo = PageInfo(pageNo, pageSize, 2)
 
-        given(getPerformanceInfoListUseCase(any()))
+        given(getPerformanceListUseCase(any()))
             .willReturn(WithPage(listOf(), pageInfo))
 
         // then

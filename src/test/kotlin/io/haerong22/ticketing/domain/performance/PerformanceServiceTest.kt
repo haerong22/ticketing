@@ -27,16 +27,16 @@ class PerformanceServiceTest {
         // given
         val pageable = Pageable(1, 5)
         val pageInfo = PageInfo(1, 5, 0)
-        val expected = WithPage<PerformanceInfo>(listOf(), pageInfo)
+        val expected = WithPage<Performance>(listOf(), pageInfo)
 
-        given(performanceReaderRepository.getPerformanceInfoList(pageable))
+        given(performanceReaderRepository.getPerformanceList(pageable))
             .willReturn(expected)
 
         // when
-        val result = sut.getPerformanceInfoList(pageable)
+        val result = sut.getPerformanceList(pageable)
 
         // then
-        verify(performanceReaderRepository, times(1)).getPerformanceInfoList(pageable)
+        verify(performanceReaderRepository, times(1)).getPerformanceList(pageable)
         assertThat(result.list).asList()
         assertThat(result.pageInfo).isEqualTo(pageInfo)
     }
