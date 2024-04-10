@@ -1,5 +1,5 @@
 ### 공연 리스트 조회
-GET http://localhost:8080/api/performances
+GET http://localhost:8080/api/performances?page_no=1&page_size=2
 wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
 
 ### 공연 날짜 리스트 조회
