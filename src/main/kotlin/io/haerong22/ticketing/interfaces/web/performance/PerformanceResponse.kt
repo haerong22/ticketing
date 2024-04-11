@@ -1,6 +1,8 @@
 package io.haerong22.ticketing.interfaces.web.performance
 
 import io.haerong22.ticketing.domain.common.PageInfo
+import io.haerong22.ticketing.domain.common.WithPage
+import io.haerong22.ticketing.domain.performance.Performance
 import java.time.LocalDateTime
 
 class PerformanceResponse {
@@ -19,25 +21,29 @@ class PerformanceResponse {
     }
 
     class PerformanceList(
-        val performances: List<Performance>,
+        val performances: List<PerformanceInfo>,
         val page: PageInfo,
     ) {
 
-        class Performance(
+        class PerformanceInfo(
             val performanceId: Long,
             val title: String,
             val content: String,
-        ) {
+        )
 
-            companion object {
+        companion object {
 
-                fun toResponse(performance: io.haerong22.ticketing.domain.performance.Performance) : Performance {
-                    return Performance(
-                        performanceId = performance.performanceId,
-                        title = performance.title,
-                        content = performance.content,
-                    )
-                }
+            fun toResponse(result: WithPage<Performance>) : PerformanceList {
+                return PerformanceList(
+                    result.list.map {
+                        PerformanceInfo(
+                            performanceId = it.performanceId,
+                            title = it.title,
+                            content = it.content,
+                        )
+                    },
+                    result.pageInfo
+                )
             }
         }
     }
@@ -54,6 +60,24 @@ class PerformanceResponse {
             val startAt: LocalDateTime,
             val endAt: LocalDateTime,
         )
+
+        companion object {
+
+            fun toResponse(performance: Performance): PerformanceScheduleList {
+                return PerformanceResponse.PerformanceScheduleList(
+                    title = performance.title,
+                    content = performance.content,
+                    date = performance.schedules?.map {
+                        Schedule(
+                            performanceScheduleId = it.performanceScheduleId,
+                            reservationAt = it.reservationAt,
+                            startAt = it.startAt,
+                            endAt = it.endAt,
+                        )
+                    } ?: emptyList()
+                )
+            }
+        }
     }
 
     class ReserveSeat(

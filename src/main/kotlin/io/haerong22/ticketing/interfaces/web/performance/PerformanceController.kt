@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController
 class PerformanceController(
     private val getPerformanceListUseCase: GetPerformanceListUseCase,
     private val getPerformanceScheduleListUseCase: GetPerformanceScheduleListUseCase,
-    private val mapper: PerformanceResponseMapper,
 ) {
 
     @GetMapping
@@ -28,12 +27,8 @@ class PerformanceController(
         @RequestParam("page_size") pageSize: Int,
     ): CommonResponse<PerformanceResponse.PerformanceList> {
         val result = getPerformanceListUseCase(Pageable(pageNo, pageSize))
-
         return CommonResponse.ok(
-            PerformanceResponse.PerformanceList(
-                result.list.map { PerformanceResponse.PerformanceList.Performance.toResponse(it) },
-                result.pageInfo
-            )
+            PerformanceResponse.PerformanceList.toResponse(result)
         )
     }
 
@@ -43,7 +38,9 @@ class PerformanceController(
         @PathVariable("performance_id") performanceId: Long,
     ): CommonResponse<PerformanceResponse.PerformanceScheduleList> {
         val result = getPerformanceScheduleListUseCase(performanceId)
-        return CommonResponse.ok(mapper.toResponse(result))
+        return CommonResponse.ok(
+            PerformanceResponse.PerformanceScheduleList.toResponse(result)
+        )
     }
 
     @GetMapping("/{performance_schedule_id}/seats")

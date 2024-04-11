@@ -12,14 +12,12 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.given
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDateTime
 
-@Import(PerformanceResponseMapper::class)
 @WebMvcTest(PerformanceController::class)
 class PerformanceControllerTest : WebTestSupport() {
 
