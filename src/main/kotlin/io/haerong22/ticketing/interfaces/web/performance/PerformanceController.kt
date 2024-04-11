@@ -4,12 +4,6 @@ import io.haerong22.ticketing.application.performance.GetPerformanceListUseCase
 import io.haerong22.ticketing.application.performance.GetPerformanceScheduleListUseCase
 import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.interfaces.web.CommonResponse
-import io.haerong22.ticketing.interfaces.web.performance.request.ReserveSeatRequest
-import io.haerong22.ticketing.interfaces.web.performance.response.AvailableSeatListResponse
-import io.haerong22.ticketing.interfaces.web.performance.response.PerformanceListResponse
-import io.haerong22.ticketing.interfaces.web.performance.response.PerformanceScheduleListResponse
-import io.haerong22.ticketing.interfaces.web.performance.response.ReserveSeatResponse
-import io.haerong22.ticketing.interfaces.web.performance.response.Seat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -32,12 +26,12 @@ class PerformanceController(
         @RequestHeader("wq-token") token: String,
         @RequestParam("page_no") pageNo: Int,
         @RequestParam("page_size") pageSize: Int,
-    ): CommonResponse<PerformanceListResponse> {
+    ): CommonResponse<PerformanceResponse.PerformanceList> {
         val result = getPerformanceListUseCase(Pageable(pageNo, pageSize))
 
         return CommonResponse.ok(
-            PerformanceListResponse(
-                result.list.map { PerformanceListResponse.Performance.toResponse(it) },
+            PerformanceResponse.PerformanceList(
+                result.list.map { PerformanceResponse.PerformanceList.Performance.toResponse(it) },
                 result.pageInfo
             )
         )
@@ -47,7 +41,7 @@ class PerformanceController(
     fun getPerformanceScheduleList(
         @RequestHeader("wq-token") token: String,
         @PathVariable("performance_id") performanceId: Long,
-    ): CommonResponse<PerformanceScheduleListResponse> {
+    ): CommonResponse<PerformanceResponse.PerformanceScheduleList> {
         val result = getPerformanceScheduleListUseCase(performanceId)
         return CommonResponse.ok(mapper.toResponse(result))
     }
@@ -56,12 +50,12 @@ class PerformanceController(
     fun getAvailableSeatList(
         @RequestHeader("wq-token") token: String,
         @PathVariable("performance_schedule_id") performanceId: Long,
-    ): CommonResponse<AvailableSeatListResponse> {
+    ): CommonResponse<PerformanceResponse.AvailableSeatList> {
         return CommonResponse.ok(
-            AvailableSeatListResponse(
+            PerformanceResponse.AvailableSeatList(
                 listOf(
-                    Seat(10, 1, 10000),
-                    Seat(15, 4, 20000),
+                    PerformanceResponse.AvailableSeatList.Seat(10, 1, 10000),
+                    PerformanceResponse.AvailableSeatList.Seat(15, 4, 20000),
                 ),
                 50,
                 2
@@ -73,10 +67,10 @@ class PerformanceController(
     fun reserveSeat(
         @RequestHeader("wq-token") token: String,
         @PathVariable("performance_schedule_id") performanceId: Long,
-        @RequestBody request: ReserveSeatRequest,
-    ): CommonResponse<ReserveSeatResponse> {
+        @RequestBody request: PerformanceRequest.ReserveSeat,
+    ): CommonResponse<PerformanceResponse.ReserveSeat> {
         return CommonResponse.ok(
-            ReserveSeatResponse(1)
+            PerformanceResponse.ReserveSeat(1)
         )
     }
 }

@@ -4,8 +4,6 @@ import io.haerong22.ticketing.application.user.ChargeUserPointUseCase
 import io.haerong22.ticketing.application.user.GetUserPointUseCase
 import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.interfaces.web.CommonResponse
-import io.haerong22.ticketing.interfaces.web.user.request.ChargeUserPointRequest
-import io.haerong22.ticketing.interfaces.web.user.response.UserPointResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,16 +21,16 @@ class UserPointController(
     @GetMapping("/{user_id}/point")
     fun getUserPoint(
         @PathVariable(name = "user_id") userId: Long,
-    ): CommonResponse<UserPointResponse> {
+    ): CommonResponse<UserResponse.Point> {
         val command = UserCommand.GetPoint(userId)
         val result = getUserPointUseCase(command)
-        return CommonResponse.ok(UserPointResponse.toResponse(result))
+        return CommonResponse.ok(UserResponse.Point.toResponse(result))
     }
 
     @PatchMapping("/{user_id}/point")
     fun chargeUserPoint(
         @PathVariable(name = "user_id") userId: Long,
-        @RequestBody request: ChargeUserPointRequest,
+        @RequestBody request: UserRequest.ChargePoint,
     ): CommonResponse<Unit> {
         val command = UserCommand.ChargePoint(userId, request.amount)
         chargeUserPointUseCase(command)

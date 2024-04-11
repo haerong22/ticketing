@@ -6,7 +6,6 @@ import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserPoint
 import io.haerong22.ticketing.interfaces.web.WebTestSupport
-import io.haerong22.ticketing.interfaces.web.user.request.ChargeUserPointRequest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -66,7 +65,7 @@ class UserPointControllerTest() : WebTestSupport() {
         // given
         val userId = 1L
         val amount = 10000
-        val request = ChargeUserPointRequest(amount)
+        val request = UserRequest.ChargePoint(amount)
 
         // then
         mockMvc.perform(
@@ -85,7 +84,7 @@ class UserPointControllerTest() : WebTestSupport() {
     fun `유저 포인트 충전 시 userId 는 양수이다`(userId: Long) {
         // given
         val amount = 10000
-        val request = ChargeUserPointRequest(amount)
+        val request = UserRequest.ChargePoint(amount)
 
         // then
         mockMvc.perform(
@@ -104,7 +103,7 @@ class UserPointControllerTest() : WebTestSupport() {
     fun `유저 포인트 충전 시 amount 는 양수이다`(amount: Int) {
         // given
         val userId = 1L
-        val request = ChargeUserPointRequest(amount)
+        val request = UserRequest.ChargePoint(amount)
 
         // then
         mockMvc.perform(

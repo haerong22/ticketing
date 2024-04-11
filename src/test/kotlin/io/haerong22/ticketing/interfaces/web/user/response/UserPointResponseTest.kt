@@ -2,6 +2,7 @@ package io.haerong22.ticketing.interfaces.web.user.response
 
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserPoint
+import io.haerong22.ticketing.interfaces.web.user.UserResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,7 +14,7 @@ class UserPointResponseTest {
         val user = User(1L, "유저", UserPoint(0))
 
         // when
-        val result = UserPointResponse.toResponse(user)
+        val result = UserResponse.Point.toResponse(user)
 
         // then
         assertThat(result.userId).isEqualTo(1L)
