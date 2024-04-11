@@ -1,7 +1,7 @@
 package io.haerong22.ticketing.application.user.unit
 
 import io.haerong22.ticketing.application.user.GetUserPointUseCase
-import io.haerong22.ticketing.application.user.command.GetUserPointCommand
+import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.domain.user.UserService
 import io.haerong22.ticketing.stub.UserReaderRepositoryStub
 import io.haerong22.ticketing.stub.UserStoreRepositoryStub
@@ -16,7 +16,7 @@ class GetUserPointUseCaseTest {
         val userService = UserService(UserReaderRepositoryStub(), UserStoreRepositoryStub())
         val useCase = GetUserPointUseCase(userService)
 
-        val command = GetUserPointCommand(1L)
+        val command = UserCommand.GetPoint(1L)
 
         // when
         val result = useCase(command)

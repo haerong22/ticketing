@@ -2,8 +2,7 @@ package io.haerong22.ticketing.interfaces.web.user
 
 import io.haerong22.ticketing.application.user.ChargeUserPointUseCase
 import io.haerong22.ticketing.application.user.GetUserPointUseCase
-import io.haerong22.ticketing.application.user.command.ChargeUserPointCommand
-import io.haerong22.ticketing.application.user.command.GetUserPointCommand
+import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserPoint
 import io.haerong22.ticketing.interfaces.web.WebTestSupport
@@ -34,7 +33,7 @@ class UserPointControllerTest() : WebTestSupport() {
     fun `유저 포인트 조회 성공`() {
         // given
         val userId = 1L
-        given(getUserPointUseCase(GetUserPointCommand(userId)))
+        given(getUserPointUseCase(UserCommand.GetPoint(userId)))
             .willReturn(User(userId, "유저1", UserPoint(0)))
 
         // then

@@ -1,14 +1,16 @@
 package io.haerong22.ticketing.application.user
 
 import io.haerong22.ticketing.application.IntegrationTestSupport
-import io.haerong22.ticketing.application.user.command.ChargeUserPointCommand
+import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.domain.user.UserException
 import io.haerong22.ticketing.infrastructure.db.user.PointHistoryJpaRepository
 import io.haerong22.ticketing.infrastructure.db.user.UserEntity
 import io.haerong22.ticketing.infrastructure.db.user.UserJpaRepository
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import java.util.concurrent.CompletableFuture.*
+import java.util.concurrent.CompletableFuture.allOf
+import java.util.concurrent.CompletableFuture.runAsync
 
 class ChargeUserPointUseCaseTest(
     private val sut: ChargeUserPointUseCase,
@@ -21,7 +23,7 @@ class ChargeUserPointUseCaseTest(
         // given
         userJpaRepository.save(UserEntity("유저", 0))
 
-        val command = ChargeUserPointCommand(1L, 1000)
+        val command = UserCommand.ChargePoint(1L, 1000)
 
         // when
         val result = sut(command)
@@ -35,7 +37,7 @@ class ChargeUserPointUseCaseTest(
     @Test
     fun `유저 포인트 충전 시 유저가 없으면 UserException이 발생한다`() {
         // given
-        val command = ChargeUserPointCommand(1L, 1000)
+        val command = UserCommand.ChargePoint(1L, 1000)
 
         // when, then
         assertThatThrownBy { sut(command) }
@@ -50,11 +52,11 @@ class ChargeUserPointUseCaseTest(
 
         // when
         allOf(
-            runAsync { sut(ChargeUserPointCommand(1L, 1000)) },
-            runAsync { sut(ChargeUserPointCommand(1L, 2000)) },
-            runAsync { sut(ChargeUserPointCommand(1L, 3000)) },
-            runAsync { sut(ChargeUserPointCommand(1L, 4000)) },
-            runAsync { sut(ChargeUserPointCommand(1L, 5000)) },
+            runAsync { sut(UserCommand.ChargePoint(1L, 1000)) },
+            runAsync { sut(UserCommand.ChargePoint(1L, 2000)) },
+            runAsync { sut(UserCommand.ChargePoint(1L, 3000)) },
+            runAsync { sut(UserCommand.ChargePoint(1L, 4000)) },
+            runAsync { sut(UserCommand.ChargePoint(1L, 5000)) },
         ).join()
 
         // then

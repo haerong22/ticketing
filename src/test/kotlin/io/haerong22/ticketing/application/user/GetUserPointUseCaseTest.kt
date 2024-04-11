@@ -1,7 +1,7 @@
 package io.haerong22.ticketing.application.user
 
 import io.haerong22.ticketing.application.IntegrationTestSupport
-import io.haerong22.ticketing.application.user.command.GetUserPointCommand
+import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.domain.user.UserException
 import io.haerong22.ticketing.infrastructure.db.user.UserEntity
 import io.haerong22.ticketing.infrastructure.db.user.UserJpaRepository
@@ -19,7 +19,7 @@ class GetUserPointUseCaseTest(
         // given
         userJpaRepository.save(UserEntity("유저", 0))
 
-        val command = GetUserPointCommand(1L)
+        val command = UserCommand.GetPoint(1L)
 
         // when
         val result = getUserPointUseCase.invoke(command)
@@ -33,7 +33,7 @@ class GetUserPointUseCaseTest(
     @Test
     fun `유저 포인트 조회 시 유저가 없으면 UserException 이 발생한다`() {
         // given
-        val command = GetUserPointCommand(1L)
+        val command = UserCommand.GetPoint(1L)
 
         // when, then
         assertThatThrownBy { getUserPointUseCase.invoke(command) }

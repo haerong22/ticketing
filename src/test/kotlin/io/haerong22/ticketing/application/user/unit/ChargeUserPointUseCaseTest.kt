@@ -1,7 +1,7 @@
 package io.haerong22.ticketing.application.user.unit
 
 import io.haerong22.ticketing.application.user.ChargeUserPointUseCase
-import io.haerong22.ticketing.application.user.command.ChargeUserPointCommand
+import io.haerong22.ticketing.application.user.command.UserCommand
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserPoint
 import io.haerong22.ticketing.domain.user.UserService
@@ -31,7 +31,7 @@ class ChargeUserPointUseCaseTest {
         val user = User(1L, "유저", UserPoint(0))
         val expected = User(1L, "유저", UserPoint(10000))
 
-        val command = ChargeUserPointCommand(1L, 10000)
+        val command = UserCommand.ChargePoint(1L, 10000)
 
         given(userService.chargePoint(command.userId, command.amount)).willReturn(expected)
 
