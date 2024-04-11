@@ -1,19 +1,24 @@
 package io.haerong22.ticketing.infrastructure.db.performance
 
 import io.haerong22.ticketing.domain.common.Pageable
+import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.infrastructure.DbTestSupport
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.tuple
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
+import java.time.LocalDateTime
 
 @Import(PerformanceReaderRepositoryImpl::class)
 class PerformanceReaderRepositoryImplTest(
     private val performanceReaderRepositoryImpl: PerformanceReaderRepositoryImpl,
     private val performanceJpaRepository: PerformanceJpaRepository,
+    private val performanceScheduleJpaRepository: PerformanceScheduleJpaRepository,
 ) : DbTestSupport() {
 
     @Test
-    fun `공연 정보를 조회 할 수 있다`() {
+    fun `공연 리스트를 조회 할 수 있다`() {
         // given
         performanceJpaRepository.save(PerformanceEntity("공연1", "내용1"))
         performanceJpaRepository.save(PerformanceEntity("공연2", "내용2"))
@@ -54,5 +59,62 @@ class PerformanceReaderRepositoryImplTest(
         assertThat(result.pageInfo.pageNo).isEqualTo(2)
         assertThat(result.pageInfo.pageSize).isEqualTo(5)
         assertThat(result.pageInfo.totalElements).isEqualTo(3)
+    }
+
+    @Test
+    fun `공연 정보를 조회 할 수 있다`() {
+        // given
+        performanceJpaRepository.save(PerformanceEntity("공연1", "내용1"))
+        performanceScheduleJpaRepository.save(
+            PerformanceScheduleEntity(
+                1L,
+                LocalDateTime.of(2024, 4, 11, 17, 0, 0),
+                LocalDateTime.of(2024, 4, 11, 20, 0, 0),
+                LocalDateTime.of(2024, 4, 1, 17, 0, 0),
+            )
+        )
+        performanceScheduleJpaRepository.save(
+            PerformanceScheduleEntity(
+                1L,
+                LocalDateTime.of(2024, 4, 12, 17, 0, 0),
+                LocalDateTime.of(2024, 4, 12, 20, 0, 0),
+                LocalDateTime.of(2024, 4, 1, 17, 0, 0),
+            )
+        )
+
+
+        // when
+        val result = performanceReaderRepositoryImpl.getPerformance(1L)
+
+        // then
+        assertThat(result.performanceId).isEqualTo(1L)
+        assertThat(result.title).isEqualTo("공연1")
+        assertThat(result.content).isEqualTo("내용1")
+        assertThat(result.schedules).hasSize(2)
+            .extracting("performanceScheduleId", "startAt", "endAt", "reservationAt")
+            .containsExactlyInAnyOrder(
+                tuple(
+                    1L,
+                    LocalDateTime.of(2024, 4, 11, 17, 0, 0),
+                    LocalDateTime.of(2024, 4, 11, 20, 0, 0),
+                    LocalDateTime.of(2024, 4, 1, 17, 0, 0),
+                ),
+                tuple(
+                    2L,
+                    LocalDateTime.of(2024, 4, 12, 17, 0, 0),
+                    LocalDateTime.of(2024, 4, 12, 20, 0, 0),
+                    LocalDateTime.of(2024, 4, 1, 17, 0, 0),
+                ),
+            )
+    }
+
+    @Test
+    fun `공연 정보가 없으면 PerformanceException 이 발생한다`() {
+        // given
+
+        // when, then
+        assertThatThrownBy { performanceReaderRepositoryImpl.getPerformance(1L) }
+            .isInstanceOf(PerformanceException::class.java)
+            .hasMessage("공연을 찾을 수 없습니다.")
     }
 }
