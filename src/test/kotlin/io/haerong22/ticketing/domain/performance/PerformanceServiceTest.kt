@@ -40,4 +40,23 @@ class PerformanceServiceTest {
         assertThat(result.list).asList()
         assertThat(result.pageInfo).isEqualTo(pageInfo)
     }
+
+    @Test
+    fun `공연 스케줄 리스트 조회`() {
+        // given
+        val performanceId = 1L
+
+        given(performanceReaderRepository.getPerformance(performanceId))
+            .willReturn(Performance(performanceId, "공연", "내용", listOf()))
+
+        // when
+        val result = sut.getPerformanceScheduleList(performanceId)
+
+        // then
+        verify(performanceReaderRepository, times(1)).getPerformance(performanceId)
+        assertThat(result.performanceId).isEqualTo(1L)
+        assertThat(result.title).isEqualTo("공연")
+        assertThat(result.content).isEqualTo("내용")
+        assertThat(result.schedules).isEmpty()
+    }
 }

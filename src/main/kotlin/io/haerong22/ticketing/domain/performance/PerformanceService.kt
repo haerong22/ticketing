@@ -12,4 +12,8 @@ class PerformanceService(
     fun getPerformanceList(pageable: Pageable) : WithPage<Performance> {
         return performanceReaderRepository.getPerformanceList(pageable)
     }
+
+    fun getPerformanceScheduleList(performanceId: Long) : Performance {
+        return performanceReaderRepository.getPerformance(performanceId)
+    }
 }

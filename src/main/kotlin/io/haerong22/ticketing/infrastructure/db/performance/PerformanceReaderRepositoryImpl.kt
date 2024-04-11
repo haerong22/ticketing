@@ -5,6 +5,7 @@ import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.domain.common.WithPage
 import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceReaderRepository
+import io.haerong22.ticketing.domain.performance.PerformanceSchedule
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
 
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Repository
 class PerformanceReaderRepositoryImpl(
     private val performanceJpaRepository: PerformanceJpaRepository,
 ) : PerformanceReaderRepository {
+    override fun getPerformance(performanceId: Long): Performance {
+        TODO("Not yet implemented")
+    }
 
     override fun getPerformanceList(pageable: Pageable): WithPage<Performance> {
         val pageRequest = PageRequest.of(pageable.pageNo - 1, pageable.pageSize)
