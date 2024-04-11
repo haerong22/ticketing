@@ -1,17 +1,30 @@
 package io.haerong22.ticketing.interfaces.web.performance
 
 import io.haerong22.ticketing.application.performance.GetPerformanceListUseCase
+import io.haerong22.ticketing.application.performance.GetPerformanceScheduleListUseCase
 import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.interfaces.web.CommonResponse
 import io.haerong22.ticketing.interfaces.web.performance.request.ReserveSeatRequest
-import io.haerong22.ticketing.interfaces.web.performance.response.*
-import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
+import io.haerong22.ticketing.interfaces.web.performance.response.AvailableSeatListResponse
+import io.haerong22.ticketing.interfaces.web.performance.response.PerformanceListResponse
+import io.haerong22.ticketing.interfaces.web.performance.response.PerformanceScheduleListResponse
+import io.haerong22.ticketing.interfaces.web.performance.response.ReserveSeatResponse
+import io.haerong22.ticketing.interfaces.web.performance.response.Seat
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/performances")
 class PerformanceController(
     private val getPerformanceListUseCase: GetPerformanceListUseCase,
+    private val getPerformanceScheduleListUseCase: GetPerformanceScheduleListUseCase,
+    private val mapper: PerformanceResponseMapper,
 ) {
 
     @GetMapping
@@ -35,26 +48,8 @@ class PerformanceController(
         @RequestHeader("wq-token") token: String,
         @PathVariable("performance_id") performanceId: Long,
     ): CommonResponse<PerformanceScheduleListResponse> {
-        return CommonResponse.ok(
-            PerformanceScheduleListResponse(
-                "콘서트 제목!!",
-                "콘서트 내용!!",
-                listOf(
-                    PerformanceScheduleListResponse.Schedule(
-                        1,
-                        LocalDateTime.of(2024, 4, 15, 17, 0, 0),
-                        LocalDateTime.of(2024, 5, 5, 17, 0, 0),
-                        LocalDateTime.of(2024, 5, 5, 20, 0, 0),
-                    ),
-                    PerformanceScheduleListResponse.Schedule(
-                        1,
-                        LocalDateTime.of(2024, 5, 15, 17, 0, 0),
-                        LocalDateTime.of(2024, 6, 5, 17, 0, 0),
-                        LocalDateTime.of(2024, 6, 5, 20, 0, 0),
-                    ),
-                )
-            )
-        )
+        val result = getPerformanceScheduleListUseCase(performanceId)
+        return CommonResponse.ok(mapper.toResponse(result))
     }
 
     @GetMapping("/{performance_schedule_id}/seats")
