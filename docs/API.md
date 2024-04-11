@@ -1,5 +1,8 @@
 ## 📝 API
 
+### Swagger
+![swagger](swagger.png)
+
 ### 공통 응답
 
 | Name    | Type     | Description |
