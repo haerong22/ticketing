@@ -3,6 +3,7 @@ package io.haerong22.ticketing.infrastructure.db.performance
 import io.haerong22.ticketing.domain.common.PageInfo
 import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.domain.common.WithPage
+import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.domain.performance.PerformanceReaderRepository
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository
 class PerformanceReaderRepositoryImpl(
     private val performanceJpaRepository: PerformanceJpaRepository,
     private val performanceScheduleJpaRepository: PerformanceScheduleJpaRepository,
+    private val seatJpaRepository: SeatJpaRepository,
 ) : PerformanceReaderRepository {
     override fun getPerformance(performanceId: Long): Performance {
         val performanceEntity = performanceJpaRepository.findById(performanceId)
@@ -30,7 +32,8 @@ class PerformanceReaderRepositoryImpl(
     }
 
     override fun getAvailableSeatList(performanceScheduleId: Long): List<Seat> {
-        TODO("Not yet implemented")
+        return seatJpaRepository.findByPerformanceScheduleIdAndStatus(performanceScheduleId, SeatStatus.OPEN)
+            .map { it.toDomain() }
     }
 
     override fun getPerformanceList(pageable: Pageable): WithPage<Performance> {

@@ -1,6 +1,7 @@
 package io.haerong22.ticketing.infrastructure.db.performance
 
 import io.haerong22.ticketing.domain.common.Pageable
+import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.infrastructure.DbTestSupport
 import org.assertj.core.api.Assertions.assertThat
@@ -12,9 +13,10 @@ import java.time.LocalDateTime
 
 @Import(PerformanceReaderRepositoryImpl::class)
 class PerformanceReaderRepositoryImplTest(
-    private val performanceReaderRepositoryImpl: PerformanceReaderRepositoryImpl,
+    private val sut: PerformanceReaderRepositoryImpl,
     private val performanceJpaRepository: PerformanceJpaRepository,
     private val performanceScheduleJpaRepository: PerformanceScheduleJpaRepository,
+    private val seatJpaRepository: SeatJpaRepository,
 ) : DbTestSupport() {
 
     @Test
@@ -27,7 +29,7 @@ class PerformanceReaderRepositoryImplTest(
         val pageable = Pageable(1, 1)
 
         // when
-        val result = performanceReaderRepositoryImpl.getPerformanceList(pageable)
+        val result = sut.getPerformanceList(pageable)
 
         // then
         assertThat(result.list).hasSize(1)
@@ -51,7 +53,7 @@ class PerformanceReaderRepositoryImplTest(
         val pageable = Pageable(2, 5)
 
         // when
-        val result = performanceReaderRepositoryImpl.getPerformanceList(pageable)
+        val result = sut.getPerformanceList(pageable)
 
         // then
         assertThat(result.list).isEmpty()
@@ -84,7 +86,7 @@ class PerformanceReaderRepositoryImplTest(
 
 
         // when
-        val result = performanceReaderRepositoryImpl.getPerformance(1L)
+        val result = sut.getPerformance(1L)
 
         // then
         assertThat(result.performanceId).isEqualTo(1L)
@@ -113,8 +115,35 @@ class PerformanceReaderRepositoryImplTest(
         // given
 
         // when, then
-        assertThatThrownBy { performanceReaderRepositoryImpl.getPerformance(1L) }
+        assertThatThrownBy { sut.getPerformance(1L) }
             .isInstanceOf(PerformanceException::class.java)
             .hasMessage("공연을 찾을 수 없습니다.")
+    }
+
+    @Test
+    fun `예약 가능한 좌석 리스트를 조회 할 수 있다`() {
+        // given
+        performanceJpaRepository.save(PerformanceEntity("공연1", "내용1"))
+        performanceScheduleJpaRepository.save(
+            PerformanceScheduleEntity(
+                1L,
+                LocalDateTime.of(2024, 4, 11, 17, 0, 0),
+                LocalDateTime.of(2024, 4, 11, 20, 0, 0),
+                LocalDateTime.of(2024, 4, 1, 17, 0, 0),
+            )
+        )
+        seatJpaRepository.save(SeatEntity(1L, 1, 10000, SeatStatus.RESERVED))
+        seatJpaRepository.save(SeatEntity(1L, 2, 20000, SeatStatus.OPEN))
+
+        val performanceScheduleId = 1L
+
+        // when
+        val result = sut.getAvailableSeatList(performanceScheduleId)
+
+        // then
+        assertThat(result).hasSize(1)
+        assertThat(result[0].seatId).isEqualTo(2)
+        assertThat(result[0].seatNo).isEqualTo(2)
+        assertThat(result[0].price).isEqualTo(20000)
     }
 }
