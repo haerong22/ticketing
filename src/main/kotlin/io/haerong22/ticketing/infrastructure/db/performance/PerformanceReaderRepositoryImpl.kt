@@ -7,6 +7,7 @@ import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.domain.performance.PerformanceReaderRepository
 import io.haerong22.ticketing.domain.performance.PerformanceResponseCode.PERFORMANCE_NOT_FOUND
+import io.haerong22.ticketing.domain.performance.Seat
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
 
@@ -26,6 +27,10 @@ class PerformanceReaderRepositoryImpl(
             content = performanceEntity.content,
             schedules = performanceScheduleEntity.map { it.toDomain() }
         )
+    }
+
+    override fun getAvailableSeatList(performanceScheduleId: Long): List<Seat> {
+        TODO("Not yet implemented")
     }
 
     override fun getPerformanceList(pageable: Pageable): WithPage<Performance> {

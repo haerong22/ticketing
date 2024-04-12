@@ -16,4 +16,8 @@ class PerformanceService(
     fun getPerformanceScheduleList(performanceId: Long) : Performance {
         return performanceReaderRepository.getPerformance(performanceId)
     }
+
+    fun getAvailableSeatList(performanceScheduleId: Long) : List<Seat> {
+        return performanceReaderRepository.getAvailableSeatList(performanceScheduleId)
+    }
 }

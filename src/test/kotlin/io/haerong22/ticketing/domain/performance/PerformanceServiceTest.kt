@@ -59,4 +59,23 @@ class PerformanceServiceTest {
         assertThat(result.content).isEqualTo("내용")
         assertThat(result.schedules).isEmpty()
     }
+
+    @Test
+    fun `예약 가능한 좌석 리스트 조회`() {
+        // given
+        val performanceScheduleId = 1L
+
+        given(performanceReaderRepository.getAvailableSeatList(performanceScheduleId))
+            .willReturn(listOf(Seat(1L, 1, 10000)))
+
+        // when
+        val result = sut.getAvailableSeatList(performanceScheduleId)
+
+        // then
+        verify(performanceReaderRepository, times(1)).getAvailableSeatList(performanceScheduleId)
+        assertThat(result).hasSize(1)
+        assertThat(result[0].seatId).isEqualTo(1L)
+        assertThat(result[0].seatNo).isEqualTo(1)
+        assertThat(result[0].price).isEqualTo(10000)
+    }
 }
