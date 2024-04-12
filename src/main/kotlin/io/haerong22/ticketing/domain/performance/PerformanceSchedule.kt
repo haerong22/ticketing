@@ -2,7 +2,7 @@ package io.haerong22.ticketing.domain.performance
 
 import java.time.LocalDateTime
 
-class PerformanceSchedule(
+data class PerformanceSchedule(
     val performanceScheduleId: Long,
     val startAt: LocalDateTime,
     val endAt: LocalDateTime,

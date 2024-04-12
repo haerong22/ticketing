@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
 
-@Import(UserReaderRepositoryImpl::class)
-class UserReaderRepositoryImplTest(
-    private val userRepositoryImpl: UserReaderRepositoryImpl,
+@Import(UserReaderImpl::class)
+class UserReaderImplTest(
+    private val userRepositoryImpl: UserReaderImpl,
     private val userJpaRepository: UserJpaRepository,
 ) : DbTestSupport() {
 
@@ -20,7 +20,7 @@ class UserReaderRepositoryImplTest(
         val userId = 1L
 
         // when
-        val result = userRepositoryImpl.getUserById(userId)
+        val result = userRepositoryImpl.getUser(userId)
 
         // then
         assertThat(result.userId).isEqualTo(1)
@@ -34,7 +34,7 @@ class UserReaderRepositoryImplTest(
         val userId = 1L
 
         // when, then
-        assertThatThrownBy { userRepositoryImpl.getUserById(userId) }
+        assertThatThrownBy { userRepositoryImpl.getUser(userId) }
             .isInstanceOf(UserException::class.java)
             .hasMessage("유저를 찾을 수 없습니다.")
     }

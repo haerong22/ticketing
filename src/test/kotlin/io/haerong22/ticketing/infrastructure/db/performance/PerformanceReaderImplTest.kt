@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
 import java.time.LocalDateTime
 
-@Import(PerformanceReaderRepositoryImpl::class)
-class PerformanceReaderRepositoryImplTest(
-    private val sut: PerformanceReaderRepositoryImpl,
+@Import(PerformanceReaderImpl::class)
+class PerformanceReaderImplTest(
+    private val sut: PerformanceReaderImpl,
     private val performanceJpaRepository: PerformanceJpaRepository,
     private val performanceScheduleJpaRepository: PerformanceScheduleJpaRepository,
     private val seatJpaRepository: SeatJpaRepository,

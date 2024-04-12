@@ -6,18 +6,18 @@ import io.haerong22.ticketing.domain.common.WithPage
 import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceException
-import io.haerong22.ticketing.domain.performance.PerformanceReaderRepository
+import io.haerong22.ticketing.domain.performance.PerformanceReader
 import io.haerong22.ticketing.domain.performance.PerformanceResponseCode.PERFORMANCE_NOT_FOUND
 import io.haerong22.ticketing.domain.performance.Seat
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
 
 @Repository
-class PerformanceReaderRepositoryImpl(
+class PerformanceReaderImpl(
     private val performanceJpaRepository: PerformanceJpaRepository,
     private val performanceScheduleJpaRepository: PerformanceScheduleJpaRepository,
     private val seatJpaRepository: SeatJpaRepository,
-) : PerformanceReaderRepository {
+) : PerformanceReader {
     override fun getPerformance(performanceId: Long): Performance {
         val performanceEntity = performanceJpaRepository.findById(performanceId)
             .orElseThrow { throw PerformanceException(PERFORMANCE_NOT_FOUND) }

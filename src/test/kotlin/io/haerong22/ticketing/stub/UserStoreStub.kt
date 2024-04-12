@@ -2,15 +2,15 @@ package io.haerong22.ticketing.stub
 
 import io.haerong22.ticketing.domain.user.User
 import io.haerong22.ticketing.domain.user.UserPointHistory
-import io.haerong22.ticketing.domain.user.UserStoreRepository
+import io.haerong22.ticketing.domain.user.UserStore
 
-class UserStoreRepositoryStub : UserStoreRepository {
+class UserStoreStub : UserStore {
 
     override fun saveUser(user: User): User {
         return user
     }
 
-    override fun saveUserPointHistory(user: User, userPointHistory: UserPointHistory): UserPointHistory {
+    override fun savePointHistory(user: User, userPointHistory: UserPointHistory): UserPointHistory {
         return userPointHistory
     }
 }
