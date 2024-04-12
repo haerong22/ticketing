@@ -1,11 +1,13 @@
 package io.haerong22.ticketing.interfaces.web.performance
 
+import io.haerong22.ticketing.application.performance.GetAvailableSeatListUseCase
 import io.haerong22.ticketing.application.performance.GetPerformanceListUseCase
 import io.haerong22.ticketing.application.performance.GetPerformanceScheduleListUseCase
 import io.haerong22.ticketing.domain.common.PageInfo
 import io.haerong22.ticketing.domain.common.WithPage
 import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceSchedule
+import io.haerong22.ticketing.domain.performance.Seat
 import io.haerong22.ticketing.interfaces.web.WebTestSupport
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
@@ -26,6 +28,9 @@ class PerformanceControllerTest : WebTestSupport() {
 
     @MockBean
     lateinit var getPerformanceScheduleListUseCase: GetPerformanceScheduleListUseCase
+
+    @MockBean
+    lateinit var getAvailableSeatListUseCase: GetAvailableSeatListUseCase
 
     @Test
     fun `공연 리스트 조회 성공`() {
@@ -90,5 +95,32 @@ class PerformanceControllerTest : WebTestSupport() {
             .andExpect(jsonPath("$.body.date[0].reservation_at").value("2024-04-01T17:00:00"))
             .andExpect(jsonPath("$.body.date[0].start_at").value("2024-04-12T17:00:00"))
             .andExpect(jsonPath("$.body.date[0].end_at").value("2024-04-12T20:00:00"))
+    }
+
+    @Test
+    fun `예약 가능한 좌석 리스트 조회 성공`() {
+        // given
+        val token = "4844c369-717f-4730-8b4f-c3a890094daa"
+        val performanceScheduleId = 1L
+        val expected = listOf(
+            Seat(1L, 1, 10000),
+        )
+
+        given(getAvailableSeatListUseCase(performanceScheduleId))
+            .willReturn(expected)
+
+        // then
+        mockMvc.perform(
+            get("/api/performances/%d/seats".format(performanceScheduleId))
+                .header("wq-token", token)
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.code").value("0"))
+            .andExpect(jsonPath("$.message").value("success"))
+            .andExpect(jsonPath("$.body.available_seat").isArray)
+            .andExpect(jsonPath("$.body.available_seat[0].seat_id").value("1"))
+            .andExpect(jsonPath("$.body.available_seat[0].seat_no").value("1"))
+            .andExpect(jsonPath("$.body.available_seat[0].price").value("10000"))
     }
 }

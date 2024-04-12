@@ -3,21 +3,36 @@ package io.haerong22.ticketing.interfaces.web.performance
 import io.haerong22.ticketing.domain.common.PageInfo
 import io.haerong22.ticketing.domain.common.WithPage
 import io.haerong22.ticketing.domain.performance.Performance
+import io.haerong22.ticketing.domain.performance.Seat
 import java.time.LocalDateTime
 
 class PerformanceResponse {
 
     class AvailableSeatList(
-        val availableSeat: List<Seat>,
-        val totalSeats: Int,
-        val remainingSeats: Int,
+        val availableSeat: List<SeatInfo>,
     ) {
 
-        class Seat(
+        class SeatInfo(
             val seatId: Long,
             val seatNo: Int,
             val price: Int,
         )
+
+        companion object {
+
+            fun toResponse(seats: List<Seat>) : AvailableSeatList {
+                return AvailableSeatList(
+                    availableSeat = seats.map {
+                        SeatInfo(
+                            seatId = it.seatId,
+                            seatNo = it.seatNo,
+                            price = it.price,
+                        )
+                    }
+                )
+            }
+        }
+
     }
 
     class PerformanceList(
@@ -33,7 +48,7 @@ class PerformanceResponse {
 
         companion object {
 
-            fun toResponse(result: WithPage<Performance>) : PerformanceList {
+            fun toResponse(result: WithPage<Performance>): PerformanceList {
                 return PerformanceList(
                     result.list.map {
                         PerformanceInfo(

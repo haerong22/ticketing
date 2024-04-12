@@ -1,5 +1,6 @@
 package io.haerong22.ticketing.interfaces.web.performance
 
+import io.haerong22.ticketing.application.performance.GetAvailableSeatListUseCase
 import io.haerong22.ticketing.application.performance.GetPerformanceListUseCase
 import io.haerong22.ticketing.application.performance.GetPerformanceScheduleListUseCase
 import io.haerong22.ticketing.domain.common.Pageable
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 class PerformanceController(
     private val getPerformanceListUseCase: GetPerformanceListUseCase,
     private val getPerformanceScheduleListUseCase: GetPerformanceScheduleListUseCase,
+    private val getAvailableSeatListUseCase: GetAvailableSeatListUseCase,
 ) {
 
     @GetMapping
@@ -46,17 +48,11 @@ class PerformanceController(
     @GetMapping("/{performance_schedule_id}/seats")
     fun getAvailableSeatList(
         @RequestHeader("wq-token") token: String,
-        @PathVariable("performance_schedule_id") performanceId: Long,
+        @PathVariable("performance_schedule_id") performanceScheduleId: Long,
     ): CommonResponse<PerformanceResponse.AvailableSeatList> {
+        val result = getAvailableSeatListUseCase(performanceScheduleId)
         return CommonResponse.ok(
-            PerformanceResponse.AvailableSeatList(
-                listOf(
-                    PerformanceResponse.AvailableSeatList.Seat(10, 1, 10000),
-                    PerformanceResponse.AvailableSeatList.Seat(15, 4, 20000),
-                ),
-                50,
-                2
-            )
+            PerformanceResponse.AvailableSeatList.toResponse(result)
         )
     }
 
