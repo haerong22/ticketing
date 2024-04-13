@@ -7,10 +7,6 @@ data class User(
 ) {
 
     fun chargePoint(amount: Int): User {
-        return User(
-            userId = userId,
-            name = name,
-            point = point.charge(amount)
-        )
+        return this.copy(point = point.charge(amount))
     }
 }

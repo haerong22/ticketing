@@ -5,9 +5,12 @@ import io.haerong22.ticketing.domain.reservation.ReservationStore
 import org.springframework.stereotype.Repository
 
 @Repository
-class ReservationStoreImpl : ReservationStore {
+class ReservationStoreImpl(
+    private val reservationJpaRepository: ReservationJpaRepository,
+) : ReservationStore {
 
     override fun save(reservation: Reservation): Reservation {
-        TODO("Not yet implemented")
+        val reservationEntity = ReservationEntity.of(reservation)
+        return reservationJpaRepository.save(reservationEntity).toDomain()
     }
 }

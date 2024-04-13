@@ -19,8 +19,20 @@ class SeatEntity(
     val status: SeatStatus,
 ) : BaseEntity() {
 
-    fun toDomain() : Seat {
+    companion object {
+        fun of(seat: Seat): SeatEntity {
+            return SeatEntity(
+                performanceScheduleId = seat.performanceScheduleId,
+                seatNo = seat.seatNo,
+                price = seat.price,
+                status = seat.status,
+            ).apply { id = seat.seatId }
+        }
+    }
+
+    fun toDomain(): Seat {
         return Seat(
+            performanceScheduleId = performanceScheduleId,
             seatId = id!!,
             seatNo = seatNo,
             price = price,

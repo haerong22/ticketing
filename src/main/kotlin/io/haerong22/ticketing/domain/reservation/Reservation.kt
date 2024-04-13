@@ -4,6 +4,7 @@ import io.haerong22.ticketing.domain.common.enums.ReservationStatus
 import java.time.LocalDateTime
 
 data class Reservation(
+    val reservationId: Long = 0,
     val userId: Long,
     val seatId: Long,
     val status: ReservationStatus,

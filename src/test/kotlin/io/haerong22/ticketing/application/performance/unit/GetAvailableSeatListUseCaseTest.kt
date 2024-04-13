@@ -24,12 +24,21 @@ class GetAvailableSeatListUseCaseTest {
     private lateinit var performanceReader: PerformanceReader
 
     @Test
-    fun `공연 스케줄 리스트 조회`() {
+    fun `예약 가능한 좌석 리스트 조회`() {
         // given
         val performanceScheduleId = 1L
+        val expected = listOf(
+            Seat(
+                seatId = 1L,
+                performanceScheduleId = 1L,
+                seatNo = 1,
+                price = 10000,
+                status = SeatStatus.OPEN
+            )
+        )
 
         given(performanceReader.getAvailableSeatList(performanceScheduleId))
-            .willReturn(listOf(Seat(1L, 1, 10000, SeatStatus.OPEN)))
+            .willReturn(expected)
 
         // when
         val result = sut(performanceScheduleId)

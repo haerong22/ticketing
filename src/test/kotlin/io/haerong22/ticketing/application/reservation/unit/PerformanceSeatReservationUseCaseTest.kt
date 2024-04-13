@@ -38,7 +38,12 @@ class PerformanceSeatReservationUseCaseTest {
         val userId = 1L
         val seatId = 1L
         val command = ReservationCommand.Reserve(userId, seatId)
-        val seat = Seat(1L, 1, 10000, SeatStatus.OPEN)
+        val seat = Seat(
+            performanceScheduleId = 1L,
+            seatNo = 1,
+            price = 10000,
+            status = SeatStatus.OPEN
+        )
 
         given(performanceReader.getSeatWithLock(seatId)).willReturn(seat)
 

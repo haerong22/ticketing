@@ -104,7 +104,13 @@ class PerformanceControllerTest : WebTestSupport() {
         val token = "4844c369-717f-4730-8b4f-c3a890094daa"
         val performanceScheduleId = 1L
         val expected = listOf(
-            Seat(1L, 1, 10000, SeatStatus.OPEN),
+            Seat(
+                seatId = 1L,
+                performanceScheduleId = 1L,
+                seatNo = 1,
+                price = 10000,
+                SeatStatus.OPEN
+            ),
         )
 
         given(getAvailableSeatListUseCase(performanceScheduleId))

@@ -10,13 +10,20 @@ class SeatTest {
     @Test
     fun `좌석 예약 시 좌석 상태가 RESERVED 로 변경된다`() {
         // given
-        val seat = Seat(1L, 1, 10000, SeatStatus.OPEN)
+        val seat = Seat(
+            seatId = 1L,
+            performanceScheduleId = 1L,
+            seatNo = 1,
+            price = 10000,
+            status = SeatStatus.OPEN
+        )
 
         // when
         val result = seat.reserve()
 
         // then
         assertThat(result.seatId).isEqualTo(1L)
+        assertThat(result.performanceScheduleId).isEqualTo(1L)
         assertThat(result.seatNo).isEqualTo(1)
         assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(SeatStatus.RESERVED)
@@ -25,7 +32,13 @@ class SeatTest {
     @Test
     fun `좌석 예약 시 좌석 상태가 RESERVED 이면 PerformanceException 이 발생한다`() {
         // given
-        val seat = Seat(1L, 1, 10000, SeatStatus.RESERVED)
+        val seat = Seat(
+            seatId = 1L,
+            performanceScheduleId = 1L,
+            seatNo = 1,
+            price = 10000,
+            status = SeatStatus.RESERVED
+        )
 
         // when, then
         assertThatThrownBy { seat.reserve() }

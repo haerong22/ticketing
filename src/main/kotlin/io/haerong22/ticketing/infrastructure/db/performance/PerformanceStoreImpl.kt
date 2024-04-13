@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class PerformanceStoreImpl(
-    private val performanceJpaRepository: PerformanceJpaRepository,
-) : PerformanceStore{
+    private val seatJpaRepository: SeatJpaRepository,
+) : PerformanceStore {
 
     override fun save(seat: Seat): Seat {
-        TODO("Not yet implemented")
+        val seatEntity = SeatEntity.of(seat)
+        return seatJpaRepository.save(seatEntity).toDomain()
     }
 }
