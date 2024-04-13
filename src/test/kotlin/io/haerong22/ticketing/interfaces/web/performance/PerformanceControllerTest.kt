@@ -5,6 +5,7 @@ import io.haerong22.ticketing.application.performance.GetPerformanceListUseCase
 import io.haerong22.ticketing.application.performance.GetPerformanceScheduleListUseCase
 import io.haerong22.ticketing.domain.common.PageInfo
 import io.haerong22.ticketing.domain.common.WithPage
+import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceSchedule
 import io.haerong22.ticketing.domain.performance.Seat
@@ -103,7 +104,7 @@ class PerformanceControllerTest : WebTestSupport() {
         val token = "4844c369-717f-4730-8b4f-c3a890094daa"
         val performanceScheduleId = 1L
         val expected = listOf(
-            Seat(1L, 1, 10000),
+            Seat(1L, 1, 10000, SeatStatus.OPEN),
         )
 
         given(getAvailableSeatListUseCase(performanceScheduleId))

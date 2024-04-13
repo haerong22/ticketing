@@ -24,6 +24,7 @@ class SeatEntity(
             seatId = id!!,
             seatNo = seatNo,
             price = price,
+            status = status,
         )
     }
 }

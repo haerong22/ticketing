@@ -1,6 +1,7 @@
 package io.haerong22.ticketing.application.performance.unit
 
 import io.haerong22.ticketing.application.performance.GetAvailableSeatListUseCase
+import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.PerformanceReader
 import io.haerong22.ticketing.domain.performance.Seat
 import org.assertj.core.api.Assertions.assertThat
@@ -28,7 +29,7 @@ class GetAvailableSeatListUseCaseTest {
         val performanceScheduleId = 1L
 
         given(performanceReader.getAvailableSeatList(performanceScheduleId))
-            .willReturn(listOf(Seat(1L, 1, 10000)))
+            .willReturn(listOf(Seat(1L, 1, 10000, SeatStatus.OPEN)))
 
         // when
         val result = sut(performanceScheduleId)
