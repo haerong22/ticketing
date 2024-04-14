@@ -8,6 +8,7 @@ import io.haerong22.ticketing.domain.performance.Performance
 import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.domain.performance.PerformanceReader
 import io.haerong22.ticketing.domain.performance.PerformanceResponseCode.PERFORMANCE_NOT_FOUND
+import io.haerong22.ticketing.domain.performance.PerformanceResponseCode.PERFORMANCE_SEAT_NOT_FOUND
 import io.haerong22.ticketing.domain.performance.Seat
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
@@ -37,7 +38,9 @@ class PerformanceReaderImpl(
     }
 
     override fun getSeatWithLock(seatId: Long): Seat {
-        TODO("Not yet implemented")
+        return seatJpaRepository.findByIdForUpdate(seatId)
+            .orElseThrow { throw PerformanceException(PERFORMANCE_SEAT_NOT_FOUND) }
+            .toDomain()
     }
 
     override fun getPerformanceList(pageable: Pageable): WithPage<Performance> {
