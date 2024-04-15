@@ -95,8 +95,5 @@ class PerformanceResponse {
         }
     }
 
-    class ReserveSeat(
-        val reservationId: Long,
-    ) {
-    }
+
 }

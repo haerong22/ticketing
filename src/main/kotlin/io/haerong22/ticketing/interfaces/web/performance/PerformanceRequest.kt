@@ -6,8 +6,4 @@ class PerformanceRequest {
         val reservationId: Long,
     )
 
-    data class ReserveSeat(
-        val userId: Long,
-        val seatNo: Int,
-    )
 }

@@ -7,8 +7,6 @@ import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.interfaces.web.CommonResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -53,17 +51,6 @@ class PerformanceController(
         val result = getAvailableSeatListUseCase(performanceScheduleId)
         return CommonResponse.ok(
             PerformanceResponse.AvailableSeatList.toResponse(result)
-        )
-    }
-
-    @PostMapping("/{performance_schedule_id}/reservation")
-    fun reserveSeat(
-        @RequestHeader("wq-token") token: String,
-        @PathVariable("performance_schedule_id") performanceId: Long,
-        @RequestBody request: PerformanceRequest.ReserveSeat,
-    ): CommonResponse<PerformanceResponse.ReserveSeat> {
-        return CommonResponse.ok(
-            PerformanceResponse.ReserveSeat(1)
         )
     }
 }

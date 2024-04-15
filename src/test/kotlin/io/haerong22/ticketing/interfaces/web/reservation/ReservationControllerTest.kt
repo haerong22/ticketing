@@ -1,0 +1,88 @@
+package io.haerong22.ticketing.interfaces.web.reservation
+
+import io.haerong22.ticketing.application.reservation.PerformanceSeatReservationUseCase
+import io.haerong22.ticketing.interfaces.web.WebTestSupport
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+
+@WebMvcTest(ReservationController::class)
+class ReservationControllerTest : WebTestSupport() {
+
+    @MockBean
+    private lateinit var performanceSeatReservationUseCase: PerformanceSeatReservationUseCase
+
+    @Test
+    fun `좌석 예약 성공`() {
+        // given
+        val token = "4844c369-717f-4730-8b4f-c3a890094daa"
+        val request = ReservationRequest.ReserveSeat(
+            userId = 1L,
+            seatId = 1L,
+        )
+
+        // then
+        mockMvc.perform(
+            post("/api/reservations")
+                .header("wq-token", token)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.code").value("0"))
+            .andExpect(jsonPath("$.message").value("success"))
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = [-1, 0])
+    fun `좌석 예약 시 userId 는 양수이다`(userId: Long) {
+        // given
+        val token = "4844c369-717f-4730-8b4f-c3a890094daa"
+        val request = ReservationRequest.ReserveSeat(
+            userId = userId,
+            seatId = 1L,
+        )
+
+        // then
+        mockMvc.perform(
+            post("/api/reservations")
+                .header("wq-token", token)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.message").value("userId는 양수 값 입니다."))
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = [-1, 0])
+    fun `좌석 예약 시 seatId 는 양수이다`(seatId: Long) {
+        // given
+        val token = "4844c369-717f-4730-8b4f-c3a890094daa"
+        val request = ReservationRequest.ReserveSeat(
+            userId = 1L,
+            seatId = seatId,
+        )
+
+        // then
+        mockMvc.perform(
+            post("/api/reservations")
+                .header("wq-token", token)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.message").value("seatId는 양수 값 입니다."))
+    }
+}
