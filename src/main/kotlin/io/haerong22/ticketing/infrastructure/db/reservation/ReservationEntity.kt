@@ -12,6 +12,7 @@ import java.time.LocalDateTime
 class ReservationEntity(
     val userId: Long,
     val seatId: Long,
+    val price: Int,
     val status: ReservationStatus,
     val expiredAt: LocalDateTime,
 ) : BaseEntity() {
@@ -22,6 +23,7 @@ class ReservationEntity(
             return ReservationEntity(
                 userId = reservation.userId,
                 seatId = reservation.seatId,
+                price = reservation.price,
                 status = reservation.status,
                 expiredAt = reservation.expiredAt,
             ).apply { id = reservation.reservationId }
@@ -33,6 +35,7 @@ class ReservationEntity(
             reservationId = id!!,
             userId = userId,
             seatId = seatId,
+            price = price,
             status = status,
             expiredAt = expiredAt,
         )

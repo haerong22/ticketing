@@ -17,11 +17,11 @@ class PerformanceSeatReservationUseCase(
 ) {
 
     operator fun invoke(command: ReservationCommand.Reserve) {
-        val seat = performanceReader.getSeatWithLock(command.seatId)
-        val newSeat = seat.reserve()
-        performanceStore.save(newSeat)
+        var seat = performanceReader.getSeatWithLock(command.seatId)
+        seat = seat.reserve()
+        performanceStore.save(seat)
 
-        val reservation = Reservation.reserve(command.userId, command.seatId)
+        val reservation = Reservation.reserve(command.userId, command.seatId, seat.price)
         reservationStore.save(reservation)
     }
 }

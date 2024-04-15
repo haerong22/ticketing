@@ -16,6 +16,7 @@ class ReservationEntityTest {
             reservationId = 1L,
             userId = 1L,
             seatId = 1L,
+            price = 10000,
             status = ReservationStatus.RESERVED,
             expiredAt = expiredAt,
         )
@@ -27,6 +28,7 @@ class ReservationEntityTest {
         Assertions.assertThat(result.id).isEqualTo(1L)
         Assertions.assertThat(result.userId).isEqualTo(1L)
         Assertions.assertThat(result.seatId).isEqualTo(1L)
+        Assertions.assertThat(result.price).isEqualTo(10000)
         Assertions.assertThat(result.status).isEqualTo(ReservationStatus.RESERVED)
         Assertions.assertThat(result.expiredAt).isEqualTo(expiredAt)
     }

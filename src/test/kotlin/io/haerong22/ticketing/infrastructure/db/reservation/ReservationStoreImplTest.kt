@@ -21,6 +21,7 @@ class ReservationStoreImplTest(
         val reservation = Reservation(
             userId = 1L,
             seatId = 1L,
+            price = 10000,
             status = ReservationStatus.RESERVED,
             expiredAt = expiredAt,
         )
@@ -34,6 +35,7 @@ class ReservationStoreImplTest(
         assertThat(result.id).isEqualTo(1L)
         assertThat(result.userId).isEqualTo(1L)
         assertThat(result.seatId).isEqualTo(1L)
+        assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(ReservationStatus.RESERVED)
         assertThat(result.expiredAt).isEqualTo(expiredAt)
     }

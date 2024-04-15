@@ -11,13 +11,15 @@ class ReservationTest {
         // given
         val userId = 1L
         val seatId = 1L
+        val price = 10000
 
         // when
-        val result = Reservation.reserve(userId, seatId)
+        val result = Reservation.reserve(userId, seatId, price)
 
         // then
         assertThat(result.userId).isEqualTo(1L)
         assertThat(result.seatId).isEqualTo(1L)
+        assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(ReservationStatus.RESERVED)
     }
 }
