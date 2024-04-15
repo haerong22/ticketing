@@ -42,4 +42,40 @@ class UserPointTest {
             .hasMessage("충전 포인트는 0 이상 입니다.")
     }
 
+    @Test
+    fun `포인트를 사용한다`() {
+        // given
+        val userPoint = UserPoint(10000)
+        val useAmount = 5000
+
+        // when
+        val result = userPoint.use(useAmount)
+
+        // then
+        assertThat(result.amount).isEqualTo(5000)
+    }
+
+    @Test
+    fun `포인트 사용 시 음수값이면 BadRequestException 이 발생한다`() {
+        // given
+        val userPoint = UserPoint(10000)
+        val useAmount = -1
+
+        // when, then
+        assertThatThrownBy { userPoint.use(useAmount) }
+            .isInstanceOf(BadRequestException::class.java)
+            .hasMessage("사용 포인트는 0 이상 입니다.")
+    }
+
+    @Test
+    fun `포인트 사용 시 잔액이 부족하면 UserException 이 발생한다`() {
+        // given
+        val userPoint = UserPoint(0)
+        val useAmount = 10000
+
+        // when, then
+        assertThatThrownBy { userPoint.use(useAmount) }
+            .isInstanceOf(UserException::class.java)
+            .hasMessage("잔액이 부족합니다.")
+    }
 }
