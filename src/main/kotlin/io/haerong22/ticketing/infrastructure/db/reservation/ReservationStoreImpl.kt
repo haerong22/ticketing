@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class ReservationStoreImpl(
     private val reservationJpaRepository: ReservationJpaRepository,
+    private val paymentJpaRepository: PaymentJpaRepository,
 ) : ReservationStore {
 
     override fun save(reservation: Reservation): Reservation {
@@ -16,6 +17,7 @@ class ReservationStoreImpl(
     }
 
     override fun save(payment: Payment): Payment {
-        TODO("Not yet implemented")
+        val paymentEntity = PaymentEntity.of(payment)
+        return paymentJpaRepository.save(paymentEntity).toDomain()
     }
 }
