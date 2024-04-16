@@ -6,4 +6,8 @@ class ReservationRequest {
         val userId: Long,
         val seatId: Long,
     )
+
+    data class Payment(
+        val userId: Long,
+    )
 }

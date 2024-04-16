@@ -1,8 +1,10 @@
 package io.haerong22.ticketing.interfaces.web.reservation
 
 import io.haerong22.ticketing.application.reservation.PerformanceSeatReservationUseCase
+import io.haerong22.ticketing.application.reservation.ReservationPaymentUseCase
 import io.haerong22.ticketing.application.reservation.command.ReservationCommand
 import io.haerong22.ticketing.interfaces.web.CommonResponse
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/reservations")
 class ReservationController(
     private val performanceSeatReservationUseCase: PerformanceSeatReservationUseCase,
+    private val reservationPaymentUseCase: ReservationPaymentUseCase,
 ) {
 
     @PostMapping
@@ -22,6 +25,21 @@ class ReservationController(
     ): CommonResponse<Unit> {
         val command = ReservationCommand.Reserve(request.userId, request.seatId)
         performanceSeatReservationUseCase(command)
+        return CommonResponse.ok()
+    }
+
+    @PostMapping("/{reservation-id}/payments")
+    fun payment(
+        @PathVariable(name = "reservation-id") reservationId: Long,
+        @RequestBody request: ReservationRequest.Payment
+    ): CommonResponse<Void> {
+
+        val command = ReservationCommand.Pay(
+            userId = request.userId,
+            reservationId = reservationId,
+        )
+
+        reservationPaymentUseCase(command)
         return CommonResponse.ok()
     }
 }

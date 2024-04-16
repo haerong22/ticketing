@@ -7,3 +7,11 @@ wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
   "user_id": 1,
   "seat_id": 2
 }
+
+### 결제
+POST http://localhost:8080/api/reservations/1/payments
+Content-Type: application/json
+
+{
+  "user_id": 1
+}

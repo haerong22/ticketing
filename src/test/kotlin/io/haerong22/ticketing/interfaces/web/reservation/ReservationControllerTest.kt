@@ -1,6 +1,7 @@
 package io.haerong22.ticketing.interfaces.web.reservation
 
 import io.haerong22.ticketing.application.reservation.PerformanceSeatReservationUseCase
+import io.haerong22.ticketing.application.reservation.ReservationPaymentUseCase
 import io.haerong22.ticketing.interfaces.web.WebTestSupport
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,6 +18,9 @@ class ReservationControllerTest : WebTestSupport() {
 
     @MockBean
     private lateinit var performanceSeatReservationUseCase: PerformanceSeatReservationUseCase
+
+    @MockBean
+    private lateinit var reservationPaymentUseCase: ReservationPaymentUseCase
 
     @Test
     fun `좌석 예약 성공`() {
@@ -84,5 +88,66 @@ class ReservationControllerTest : WebTestSupport() {
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.code").value("400"))
             .andExpect(jsonPath("$.message").value("seatId는 양수 값 입니다."))
+    }
+
+    @Test
+    fun `예약된 좌석 결제 성공`() {
+        // given
+        val reservationId = 1L
+        val request = ReservationRequest.Payment(
+            userId = 1L,
+        )
+
+        // then
+        mockMvc.perform(
+            post("/api/reservations/%d/payments".format(reservationId))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.code").value("0"))
+            .andExpect(jsonPath("$.message").value("success"))
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = [-1, 0])
+    fun `예약된 좌석 결제 시 reservationId 는 양수이다`(reservationId: Long) {
+        // given
+        val request = ReservationRequest.Payment(
+            userId = 1L,
+        )
+
+        // then
+        mockMvc.perform(
+            post("/api/reservations/%d/payments".format(reservationId))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.message").value("reservationId는 양수 값 입니다."))
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = [-1, 0])
+    fun `예약된 좌석 결제 시 userId 는 양수이다`(userId: Long) {
+        // given
+        val reservationId = 1L
+        val request = ReservationRequest.Payment(
+            userId = userId,
+        )
+
+        // then
+        mockMvc.perform(
+            post("/api/reservations/%d/payments".format(reservationId))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.message").value("userId는 양수 값 입니다."))
     }
 }

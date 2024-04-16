@@ -2,6 +2,8 @@ package io.haerong22.ticketing.interfaces.web
 
 import io.haerong22.ticketing.domain.common.BadRequestException
 import io.haerong22.ticketing.domain.common.CustomException
+import io.haerong22.ticketing.domain.performance.PerformanceException
+import io.haerong22.ticketing.domain.reservation.ReservationException
 import io.haerong22.ticketing.domain.user.UserException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -15,7 +17,9 @@ class ApiControllerAdvice {
     val log: Logger get() = LoggerFactory.getLogger(this.javaClass)
 
     @ExceptionHandler(
-        UserException::class
+        UserException::class,
+        PerformanceException::class,
+        ReservationException::class,
     )
     fun handleBadRequestException(e: CustomException): CommonResponse<Any> {
         log.warn("CustomException : {}", e.msg)

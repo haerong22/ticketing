@@ -1,7 +1,0 @@
-### 결제
-POST http://localhost:8080/api/payments
-Content-Type: application/json
-
-{
-  "reservation_id": 15
-}
