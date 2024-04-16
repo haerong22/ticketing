@@ -15,4 +15,15 @@ class ReservationCommand {
             if (seatId <= 0) throw BadRequestException(BAD_REQUEST, "seatId는 양수 값 입니다.")
         }
     }
+
+    data class Pay(
+        val userId: Long,
+        val reservationId: Long,
+    ) {
+
+        init {
+            if (userId <= 0) throw BadRequestException(BAD_REQUEST, "userId는 양수 값 입니다.")
+            if (reservationId <= 0) throw BadRequestException(BAD_REQUEST, "reservationId는 양수 값 입니다.")
+        }
+    }
 }

@@ -3,6 +3,7 @@ package io.haerong22.ticketing.domain.reservation
 import io.haerong22.ticketing.domain.common.enums.ReservationStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 class ReservationTest {
 
@@ -21,5 +22,28 @@ class ReservationTest {
         assertThat(result.seatId).isEqualTo(1L)
         assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(ReservationStatus.RESERVED)
+    }
+
+    @Test
+    fun `결제 완료 시 예약 상태가 COMPLETE 로 변경된다`() {
+        // given
+        val reservation = Reservation(
+            reservationId = 1L,
+            userId = 1L,
+            seatId = 1L,
+            price = 10000,
+            status = ReservationStatus.RESERVED,
+            expiredAt = LocalDateTime.now(),
+        )
+
+        // when
+        val result = reservation.paymentComplete()
+
+        // then
+        assertThat(result.reservationId).isEqualTo(1L)
+        assertThat(result.userId).isEqualTo(1L)
+        assertThat(result.seatId).isEqualTo(1L)
+        assertThat(result.price).isEqualTo(10000)
+        assertThat(result.status).isEqualTo(ReservationStatus.COMPLETE)
     }
 }

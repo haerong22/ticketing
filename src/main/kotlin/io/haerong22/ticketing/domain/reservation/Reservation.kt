@@ -24,4 +24,8 @@ data class Reservation(
             )
         }
     }
+
+    fun paymentComplete(): Reservation {
+        return this.copy(status = ReservationStatus.COMPLETE)
+    }
 }

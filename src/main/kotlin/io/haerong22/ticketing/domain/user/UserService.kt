@@ -26,4 +26,14 @@ class UserService(
 
         return charged
     }
+
+    fun usePoint(user: User, amount: Int) : User {
+        val used = user.usePoint(amount)
+        userStore.saveUser(used)
+
+        val pointHistory = UserPointHistory(amount, TransactionType.USE)
+        userStore.savePointHistory(used, pointHistory)
+
+        return used
+    }
 }

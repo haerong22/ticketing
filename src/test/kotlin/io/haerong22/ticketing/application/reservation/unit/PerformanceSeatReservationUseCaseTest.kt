@@ -6,6 +6,7 @@ import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.PerformanceReader
 import io.haerong22.ticketing.domain.performance.PerformanceStore
 import io.haerong22.ticketing.domain.performance.Seat
+import io.haerong22.ticketing.domain.reservation.Reservation
 import io.haerong22.ticketing.domain.reservation.ReservationStore
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -53,6 +54,6 @@ class PerformanceSeatReservationUseCaseTest {
         // then
         verify(performanceReader, times(1)).getSeatWithLock(1L)
         verify(performanceStore, times(1)).save(any())
-        verify(reservationStore, times(1)).save(any())
+        verify(reservationStore, times(1)).save(any<Reservation>())
     }
 }
