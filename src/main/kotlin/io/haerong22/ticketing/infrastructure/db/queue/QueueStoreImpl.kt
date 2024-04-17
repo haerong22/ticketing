@@ -5,9 +5,17 @@ import io.haerong22.ticketing.domain.queue.WaitingQueue
 import org.springframework.stereotype.Repository
 
 @Repository
-class QueueStoreImpl : QueueStore {
+class QueueStoreImpl(
+    private val queueJpaRepository: QueueJpaRepository,
+) : QueueStore {
 
     override fun enter(waitingQueue: WaitingQueue): WaitingQueue {
-        TODO("Not yet implemented")
+        val queueEntity = QueueEntity.of(waitingQueue)
+        return queueJpaRepository.save(queueEntity)
+            .let {
+                val rank = queueJpaRepository.rank(it.id!!)
+                it.toDomain(rank)
+            }
+
     }
 }
