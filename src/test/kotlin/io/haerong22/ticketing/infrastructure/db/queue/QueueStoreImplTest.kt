@@ -11,6 +11,7 @@ import java.util.*
 @Import(QueueStoreImpl::class)
 class QueueStoreImplTest(
     private val sut: QueueStoreImpl,
+    private val queueJpaRepository: QueueJpaRepository,
 ) : DbTestSupport() {
 
     @Test
@@ -32,5 +33,19 @@ class QueueStoreImplTest(
         assertThat(result.rank).isEqualTo(0)
         assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
+    }
+
+    @Test
+    fun `대기열 퇴장`() {
+        // given
+        val token = UUID.randomUUID().toString()
+        queueJpaRepository.save(QueueEntity(token = token, status = QueueStatus.WAITING))
+
+        // when
+        sut.exit(token)
+
+        // then
+        val count = queueJpaRepository.count()
+        assertThat(count).isEqualTo(0)
     }
 }

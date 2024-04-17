@@ -10,4 +10,6 @@ interface QueueJpaRepository : JpaRepository<QueueEntity, Long> {
     fun rank(queueId: Long): Int
 
     fun findByToken(token: String) : Optional<QueueEntity>
+
+    fun deleteByToken(token: String)
 }
