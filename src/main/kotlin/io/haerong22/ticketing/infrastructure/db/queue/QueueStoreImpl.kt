@@ -18,4 +18,8 @@ class QueueStoreImpl(
             }
 
     }
+
+    override fun exit(token: String) {
+        TODO("Not yet implemented")
+    }
 }

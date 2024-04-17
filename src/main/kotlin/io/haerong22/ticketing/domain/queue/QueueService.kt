@@ -18,4 +18,8 @@ class QueueService(
     fun getMyQueueStatus(token: String) : WaitingQueue {
         return queueReader.getQueueStatus(token)
     }
+
+    fun exit(token: String) {
+        queueStore.exit(token)
+    }
 }
