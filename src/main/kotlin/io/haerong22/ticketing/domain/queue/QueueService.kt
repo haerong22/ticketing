@@ -14,4 +14,8 @@ class QueueService(
         val waitingQueue = WaitingQueue.enter(token)
         return queueStore.enter(waitingQueue)
     }
+
+    fun getMyQueueStatus(token: String) : WaitingQueue {
+        return queueReader.getQueueStatus(token)
+    }
 }
