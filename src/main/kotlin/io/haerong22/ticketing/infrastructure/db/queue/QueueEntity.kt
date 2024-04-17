@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.infrastructure.db.queue
 
-import io.haerong22.ticketing.domain.common.enums.TokenStatus
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.WaitingQueue
 import io.haerong22.ticketing.infrastructure.db.BaseEntity
 import jakarta.persistence.Column
@@ -18,7 +18,7 @@ class QueueEntity(
     val token: String,
 
     @Enumerated(EnumType.STRING)
-    val status: TokenStatus,
+    val status: QueueStatus,
     val expiredAt: LocalDateTime? = null,
 ) : BaseEntity() {
 

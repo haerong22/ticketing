@@ -1,7 +1,7 @@
 package io.haerong22.ticketing.application.queue
 
 import io.haerong22.ticketing.application.IntegrationTestSupport
-import io.haerong22.ticketing.domain.common.enums.TokenStatus
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.infrastructure.db.queue.QueueEntity
 import io.haerong22.ticketing.infrastructure.db.queue.QueueJpaRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -16,7 +16,7 @@ class EnterWaitingQueueUseCaseTest(
     @Test
     fun `대기열에 입장한다`() {
         // given
-        val queue = QueueEntity(token = UUID.randomUUID().toString(), status = TokenStatus.WAITING)
+        val queue = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
         queueJpaRepository.save(queue)
 
         // when
@@ -29,7 +29,7 @@ class EnterWaitingQueueUseCaseTest(
         assertThat(result.queueId).isEqualTo(2L)
         assertThat(result.rank).isEqualTo(1)
         assertThat(result.token).isNotNull()
-        assertThat(result.status).isEqualTo(TokenStatus.WAITING)
+        assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
     }
 }

@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.domain.queue
 
-import io.haerong22.ticketing.domain.common.enums.TokenStatus
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.*
@@ -19,7 +19,7 @@ class WaitingQueueTest {
         assertThat(result.queueId).isEqualTo(0)
         assertThat(result.token).isEqualTo(token)
         assertThat(result.rank).isEqualTo(0)
-        assertThat(result.status).isEqualTo(TokenStatus.WAITING)
+        assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
     }
 }

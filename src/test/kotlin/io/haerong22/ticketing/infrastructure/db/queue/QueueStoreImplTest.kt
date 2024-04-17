@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.infrastructure.db.queue
 
-import io.haerong22.ticketing.domain.common.enums.TokenStatus
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.WaitingQueue
 import io.haerong22.ticketing.infrastructure.DbTestSupport
 import org.assertj.core.api.Assertions.assertThat
@@ -20,7 +20,7 @@ class QueueStoreImplTest(
         val queue = WaitingQueue(
             token = token,
             rank = 0,
-            status = TokenStatus.WAITING,
+            status = QueueStatus.WAITING,
         )
 
         // when
@@ -30,7 +30,7 @@ class QueueStoreImplTest(
         assertThat(result.queueId).isEqualTo(1L)
         assertThat(result.token).isEqualTo(token)
         assertThat(result.rank).isEqualTo(0)
-        assertThat(result.status).isEqualTo(TokenStatus.WAITING)
+        assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
     }
 }

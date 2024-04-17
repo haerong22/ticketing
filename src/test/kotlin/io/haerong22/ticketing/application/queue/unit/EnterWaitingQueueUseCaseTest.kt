@@ -1,7 +1,7 @@
 package io.haerong22.ticketing.application.queue.unit
 
 import io.haerong22.ticketing.application.queue.EnterWaitingQueueUseCase
-import io.haerong22.ticketing.domain.common.enums.TokenStatus
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.QueueService
 import io.haerong22.ticketing.domain.queue.TokenGenerator
 import io.haerong22.ticketing.domain.queue.WaitingQueue
@@ -32,7 +32,7 @@ class EnterWaitingQueueUseCaseTest {
             queueId = 1L,
             token = token,
             rank = 10,
-            status = TokenStatus.WAITING
+            status = QueueStatus.WAITING
         )
 
         given { queueService.enter() }.willAnswer { queue }
@@ -46,7 +46,7 @@ class EnterWaitingQueueUseCaseTest {
         assertThat(result.queueId).isEqualTo(1L)
         assertThat(result.token).isEqualTo(token)
         assertThat(result.rank).isEqualTo(10)
-        assertThat(result.status).isEqualTo(TokenStatus.WAITING)
+        assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
     }
 

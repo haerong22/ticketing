@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.infrastructure.db.queue
 
-import io.haerong22.ticketing.domain.common.enums.TokenStatus
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.WaitingQueue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,7 +15,7 @@ class QueueEntityTest {
         val waitingQueue = WaitingQueue(
             token = token,
             rank = 0,
-            status = TokenStatus.WAITING,
+            status = QueueStatus.WAITING,
         )
 
         // when
@@ -24,7 +24,7 @@ class QueueEntityTest {
         // then
         assertThat(result.id).isEqualTo(0L)
         assertThat(result.token).isEqualTo(token)
-        assertThat(result.status).isEqualTo(TokenStatus.WAITING)
+        assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
     }
 }
