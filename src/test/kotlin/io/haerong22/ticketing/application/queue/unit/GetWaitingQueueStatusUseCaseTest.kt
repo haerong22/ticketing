@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.application.queue.unit
 
-import io.haerong22.ticketing.application.queue.CheckWaitingQueueStatusUseCase
+import io.haerong22.ticketing.application.queue.GetWaitingQueueStatusUseCase
 import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.QueueService
 import io.haerong22.ticketing.domain.queue.TokenGenerator
@@ -16,10 +16,10 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
 @ExtendWith(MockitoExtension::class)
-class CheckWaitingQueueStatusUseCaseTest {
+class GetWaitingQueueStatusUseCaseTest {
 
     @InjectMocks
-    private lateinit var sut: CheckWaitingQueueStatusUseCase
+    private lateinit var sut: GetWaitingQueueStatusUseCase
 
     @Mock
     private lateinit var queueService: QueueService

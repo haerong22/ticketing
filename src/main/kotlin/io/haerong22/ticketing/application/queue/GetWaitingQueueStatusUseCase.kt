@@ -5,7 +5,7 @@ import io.haerong22.ticketing.domain.queue.WaitingQueue
 import org.springframework.stereotype.Service
 
 @Service
-class CheckWaitingQueueStatusUseCase(
+class GetWaitingQueueStatusUseCase(
     private val queueService: QueueService,
 ) {
 
