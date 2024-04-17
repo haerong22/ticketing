@@ -1,6 +1,7 @@
 package io.haerong22.ticketing.interfaces.web.queue
 
 import io.haerong22.ticketing.application.queue.EnterWaitingQueueUseCase
+import io.haerong22.ticketing.application.queue.ExitWaitingQueueUseCase
 import io.haerong22.ticketing.application.queue.GetWaitingQueueStatusUseCase
 import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.WaitingQueue
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.given
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
@@ -23,6 +25,9 @@ class QueueControllerTest : WebTestSupport() {
 
     @MockBean
     lateinit var getWaitingQueueStatusUseCase: GetWaitingQueueStatusUseCase
+
+    @MockBean
+    lateinit var exitWaitingQueueUseCase: ExitWaitingQueueUseCase
 
     @Test
     fun `대기열 입장 성공`() {
@@ -77,5 +82,21 @@ class QueueControllerTest : WebTestSupport() {
             .andExpect(jsonPath("$.body.token").value("4844c369-717f-4730-8b4f-c3a890094daa"))
             .andExpect(jsonPath("$.body.rank").value(10))
             .andExpect(jsonPath("$.body.status").value("WAITING"))
+    }
+
+    @Test
+    fun `대기열 퇴장`() {
+        // given
+        val token = "4844c369-717f-4730-8b4f-c3a890094daa"
+
+        // then
+        mockMvc.perform(
+            delete("/api/queue/exit")
+                .header("wq-token", token)
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.code").value("0"))
+            .andExpect(jsonPath("$.message").value("success"))
     }
 }

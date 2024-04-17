@@ -1,6 +1,7 @@
 package io.haerong22.ticketing.interfaces.web.queue
 
 import io.haerong22.ticketing.application.queue.EnterWaitingQueueUseCase
+import io.haerong22.ticketing.application.queue.ExitWaitingQueueUseCase
 import io.haerong22.ticketing.application.queue.GetWaitingQueueStatusUseCase
 import io.haerong22.ticketing.interfaces.web.CommonResponse
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class QueueController(
     private val enterWaitingQueueUseCase: EnterWaitingQueueUseCase,
     private val getWaitingQueueStatusUseCase: GetWaitingQueueStatusUseCase,
+    private val exitWaitingQueueUseCase: ExitWaitingQueueUseCase,
 ) {
 
     @PostMapping("/enter")
@@ -39,6 +41,7 @@ class QueueController(
     fun exitWaitingQueue(
         @RequestHeader("wq-token") token: String,
     ): CommonResponse<Void> {
+        exitWaitingQueueUseCase.invoke(token)
         return CommonResponse.ok()
     }
 }
