@@ -2,7 +2,7 @@
 POST http://localhost:8080/api/queue/enter
 
 ### 대기열 확인
-GET http://localhost:8080/api/queue/check
+GET http://localhost:8080/api/queue/status
 wq-token: 4844c369-717f-4730-8b4f-c3a890094daa
 
 ### 대기열 삭제
