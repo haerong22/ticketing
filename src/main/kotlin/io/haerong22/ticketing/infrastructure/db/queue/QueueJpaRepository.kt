@@ -22,6 +22,7 @@ interface QueueJpaRepository : JpaRepository<QueueEntity, Long> {
     @Query("select q.id from QueueEntity q where q.status=:status")
     fun findIdByStatusOrderById(status: QueueStatus, pageable: Pageable): List<Long>
 
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     fun deleteByExpiredAtBefore(date: LocalDateTime): Int
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
