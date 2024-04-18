@@ -22,4 +22,12 @@ class QueueStoreImpl(
     override fun exit(token: String) {
         queueJpaRepository.deleteByToken(token)
     }
+
+    override fun clearExpiredToken() {
+        TODO("Not yet implemented")
+    }
+
+    override fun activeTokens(targets: List<Long>) {
+        TODO("Not yet implemented")
+    }
 }

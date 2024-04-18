@@ -19,4 +19,12 @@ class QueueReaderImpl(
                 it.toDomain(rank)
             }
     }
+
+    override fun getActiveCount(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTargetTokenIds(targetCount: Int): List<Long> {
+        TODO("Not yet implemented")
+    }
 }

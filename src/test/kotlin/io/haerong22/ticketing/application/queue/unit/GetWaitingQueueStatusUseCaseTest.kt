@@ -35,13 +35,13 @@ class GetWaitingQueueStatusUseCaseTest {
             status = QueueStatus.WAITING
         )
 
-        given { queueService.getMyQueueStatus(token) }.willAnswer { queue }
+        given { queueService.getQueueStatus(token) }.willAnswer { queue }
 
         // when
         val result = sut(token)
 
         // then
-        verify(queueService, times(1)).getMyQueueStatus(token)
+        verify(queueService, times(1)).getQueueStatus(token)
 
         Assertions.assertThat(result.queueId).isEqualTo(1L)
         Assertions.assertThat(result.token).isEqualTo(token)
