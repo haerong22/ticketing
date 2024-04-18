@@ -8,8 +8,7 @@ class ActiveTokenUseCase(
     private val queueService: QueueService,
 ) {
 
-    operator fun invoke() {
-        val maxUserCount = 50
+    operator fun invoke(maxUserCount: Int) {
         queueService.clearExpiredToken()
         queueService.activeTokens(maxUserCount)
     }
