@@ -23,4 +23,11 @@ class ReservationService(
         val payment = Payment.pay(reservation.reservationId, reservation.price)
         reservationStore.save(payment)
     }
+
+    fun cancelExpiredReservation() : List<Long> {
+        val reservations = reservationReader.getExpiredReservation()
+        val reservationIds = reservations.map { it.reservationId }
+        reservationStore.cancelExpiredReservation(reservationIds)
+        return reservations.map { it.seatId }
+    }
 }

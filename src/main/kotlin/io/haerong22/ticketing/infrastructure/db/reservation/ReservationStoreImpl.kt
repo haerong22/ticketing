@@ -20,4 +20,8 @@ class ReservationStoreImpl(
         val paymentEntity = PaymentEntity.of(payment)
         return paymentJpaRepository.save(paymentEntity).toDomain()
     }
+
+    override fun cancelExpiredReservation(ids: List<Long>) {
+        TODO("Not yet implemented")
+    }
 }

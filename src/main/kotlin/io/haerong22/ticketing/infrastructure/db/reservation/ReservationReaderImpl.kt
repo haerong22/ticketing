@@ -16,4 +16,8 @@ class ReservationReaderImpl(
             .orElseThrow { throw ReservationException(RESERVATION_NOT_FOUND) }
             .toDomain()
     }
+
+    override fun getExpiredReservation(): List<Reservation> {
+        TODO("Not yet implemented")
+    }
 }

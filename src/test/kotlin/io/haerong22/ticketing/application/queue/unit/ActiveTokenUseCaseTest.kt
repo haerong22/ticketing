@@ -25,7 +25,7 @@ class ActiveTokenUseCaseTest {
         val maxUserCount = 50
 
         // when
-        sut()
+        sut(maxUserCount)
 
         // then
         verify(queueService, times(1)).clearExpiredToken()

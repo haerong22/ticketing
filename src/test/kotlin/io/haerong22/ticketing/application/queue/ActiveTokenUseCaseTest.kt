@@ -17,7 +17,7 @@ class ActiveTokenUseCaseTest(
     @Test
     fun `만료된 토큰을 삭제하고 대기 상태의 토큰을 활성화 한다`() {
         // given
-        val expiredTokens = List(10) {
+        val expiredTokens = List(5) {
             QueueEntity(
                 token = UUID.randomUUID().toString(),
                 status = QueueStatus.PROCEEDING,
@@ -26,7 +26,7 @@ class ActiveTokenUseCaseTest(
         }
         queueJpaRepository.saveAll(expiredTokens)
 
-        val proceedingTokens = List(40) {
+        val proceedingTokens = List(5) {
             QueueEntity(
                 token = UUID.randomUUID().toString(),
                 status = QueueStatus.PROCEEDING,
@@ -35,22 +35,24 @@ class ActiveTokenUseCaseTest(
         }
         queueJpaRepository.saveAll(proceedingTokens)
 
-        val waitingTokens = List(20) {
+        val waitingTokens = List(10) {
             QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
         }
         queueJpaRepository.saveAll(waitingTokens)
 
+        val maxUserCount = 10
+
         // when
-        sut()
+        sut(maxUserCount)
 
         // then
         val totalCount = queueJpaRepository.count()
         val activeCount = queueJpaRepository.countByStatus(QueueStatus.PROCEEDING)
         val waitingCount = queueJpaRepository.countByStatus(QueueStatus.WAITING)
 
-        assertThat(totalCount).isEqualTo(60)
-        assertThat(activeCount).isEqualTo(50)
-        assertThat(waitingCount).isEqualTo(10)
+        assertThat(totalCount).isEqualTo(15)
+        assertThat(activeCount).isEqualTo(10)
+        assertThat(waitingCount).isEqualTo(5)
     }
 
 }

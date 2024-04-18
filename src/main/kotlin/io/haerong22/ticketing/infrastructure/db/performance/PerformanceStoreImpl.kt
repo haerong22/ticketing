@@ -13,4 +13,8 @@ class PerformanceStoreImpl(
         val seatEntity = SeatEntity.of(seat)
         return seatJpaRepository.save(seatEntity).toDomain()
     }
+
+    override fun openSeat(seatIds: List<Long>) {
+        TODO("Not yet implemented")
+    }
 }
