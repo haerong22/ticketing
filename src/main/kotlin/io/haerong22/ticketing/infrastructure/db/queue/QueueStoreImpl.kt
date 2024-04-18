@@ -1,8 +1,11 @@
 package io.haerong22.ticketing.infrastructure.db.queue
 
+import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.QueueStore
 import io.haerong22.ticketing.domain.queue.WaitingQueue
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Repository
 class QueueStoreImpl(
@@ -23,11 +26,14 @@ class QueueStoreImpl(
         queueJpaRepository.deleteByToken(token)
     }
 
+    @Transactional
     override fun clearExpiredToken() {
-        TODO("Not yet implemented")
+        queueJpaRepository.deleteByExpiredAtBefore(LocalDateTime.now())
     }
 
+    @Transactional
     override fun activeTokens(targets: List<Long>) {
-        TODO("Not yet implemented")
+        val expiredAt = LocalDateTime.now().plusMinutes(5)
+        queueJpaRepository.updateStatusByIds(targets, QueueStatus.PROCEEDING, expiredAt)
     }
 }
