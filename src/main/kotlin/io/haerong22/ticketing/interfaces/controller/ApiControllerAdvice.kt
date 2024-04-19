@@ -1,6 +1,7 @@
 package io.haerong22.ticketing.interfaces.controller
 
 import io.haerong22.ticketing.domain.common.BadRequestException
+import io.haerong22.ticketing.domain.common.CommonException
 import io.haerong22.ticketing.domain.common.CustomException
 import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.domain.queue.QueueException
@@ -18,6 +19,7 @@ class ApiControllerAdvice {
     val log: Logger get() = LoggerFactory.getLogger(this.javaClass)
 
     @ExceptionHandler(
+        CommonException::class,
         UserException::class,
         PerformanceException::class,
         ReservationException::class,

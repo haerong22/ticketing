@@ -4,10 +4,10 @@ import io.haerong22.ticketing.application.reservation.PerformanceSeatReservation
 import io.haerong22.ticketing.application.reservation.ReservationPaymentUseCase
 import io.haerong22.ticketing.application.reservation.command.ReservationCommand
 import io.haerong22.ticketing.interfaces.controller.CommonResponse
+import io.haerong22.ticketing.interfaces.controller.common.QueueToken
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,7 +20,7 @@ class ReservationController(
 
     @PostMapping
     fun reserveSeat(
-        @RequestHeader("wq-token") token: String,
+        @QueueToken token: String,
         @RequestBody request: ReservationRequest.ReserveSeat,
     ): CommonResponse<Unit> {
         val command = ReservationCommand.Reserve(request.userId, request.seatId)
