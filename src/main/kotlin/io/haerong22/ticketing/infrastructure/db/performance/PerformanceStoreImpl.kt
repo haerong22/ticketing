@@ -1,5 +1,6 @@
 package io.haerong22.ticketing.infrastructure.db.performance
 
+import io.haerong22.ticketing.domain.common.enums.SeatStatus
 import io.haerong22.ticketing.domain.performance.PerformanceStore
 import io.haerong22.ticketing.domain.performance.Seat
 import org.springframework.stereotype.Repository
@@ -15,6 +16,6 @@ class PerformanceStoreImpl(
     }
 
     override fun openSeat(seatIds: List<Long>) {
-        TODO("Not yet implemented")
+        seatJpaRepository.updateStatus(seatIds, SeatStatus.OPEN)
     }
 }

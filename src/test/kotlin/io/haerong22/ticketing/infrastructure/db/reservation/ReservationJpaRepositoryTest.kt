@@ -33,4 +33,83 @@ class ReservationJpaRepositoryTest(
         // then
         assertThat(em.getLockMode(result)).isEqualTo(LockModeType.PESSIMISTIC_WRITE)
     }
+
+    @Test
+    fun `만료된 예약 리스트를 조회한다`() {
+        // given
+        reservationJpaRepository.saveAll(listOf(
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().minusMinutes(5),
+            ),
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().minusMinutes(5),
+            ),
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().plusMinutes(5),
+            )
+        ))
+
+        val status = ReservationStatus.RESERVED
+        val date = LocalDateTime.now()
+
+        // when
+        val result = reservationJpaRepository.findAllByStatusAndExpiredAtBefore(status, date)
+
+        // then
+        assertThat(result).hasSize(2)
+        assertThat(result[0].id).isEqualTo(1L)
+        assertThat(result[1].id).isEqualTo(2L)
+    }
+
+    @Test
+    fun `reservationId 리스트로 상태를 변경한다`() {
+        // given
+        reservationJpaRepository.saveAll(listOf(
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().minusMinutes(5),
+            ),
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().minusMinutes(5),
+            ),
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().plusMinutes(5),
+            )
+        ))
+
+        val ids = listOf(1L, 2L)
+        val status = ReservationStatus.EXPIRED
+
+        // when
+        reservationJpaRepository.updateStatus(ids, status)
+
+        // then
+        val result = reservationJpaRepository.findAll()
+        assertThat(result[0].status).isEqualTo(ReservationStatus.EXPIRED)
+        assertThat(result[1].status).isEqualTo(ReservationStatus.EXPIRED)
+        assertThat(result[2].status).isEqualTo(ReservationStatus.RESERVED)
+    }
 }

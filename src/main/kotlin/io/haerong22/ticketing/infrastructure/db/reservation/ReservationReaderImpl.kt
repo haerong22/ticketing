@@ -1,10 +1,12 @@
 package io.haerong22.ticketing.infrastructure.db.reservation
 
+import io.haerong22.ticketing.domain.common.enums.ReservationStatus
 import io.haerong22.ticketing.domain.reservation.Reservation
 import io.haerong22.ticketing.domain.reservation.ReservationException
 import io.haerong22.ticketing.domain.reservation.ReservationReader
 import io.haerong22.ticketing.domain.reservation.ReservationResponseCode.RESERVATION_NOT_FOUND
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class ReservationReaderImpl(
@@ -18,6 +20,9 @@ class ReservationReaderImpl(
     }
 
     override fun getExpiredReservation(): List<Reservation> {
-        TODO("Not yet implemented")
+        val status = ReservationStatus.RESERVED
+        val date = LocalDateTime.now()
+        return reservationJpaRepository.findAllByStatusAndExpiredAtBefore(status, date)
+            .map { it.toDomain() }
     }
 }

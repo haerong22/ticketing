@@ -1,5 +1,6 @@
 package io.haerong22.ticketing.infrastructure.db.reservation
 
+import io.haerong22.ticketing.domain.common.enums.ReservationStatus
 import io.haerong22.ticketing.domain.reservation.Payment
 import io.haerong22.ticketing.domain.reservation.Reservation
 import io.haerong22.ticketing.domain.reservation.ReservationStore
@@ -22,6 +23,6 @@ class ReservationStoreImpl(
     }
 
     override fun cancelExpiredReservation(ids: List<Long>) {
-        TODO("Not yet implemented")
+        reservationJpaRepository.updateStatus(ids, ReservationStatus.EXPIRED)
     }
 }
