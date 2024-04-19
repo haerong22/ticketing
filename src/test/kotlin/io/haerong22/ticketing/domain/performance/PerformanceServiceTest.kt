@@ -15,6 +15,9 @@ class PerformanceServiceTest {
     private lateinit var sut: PerformanceService
 
     @Mock
+    private lateinit var performanceReader: PerformanceReader
+
+    @Mock
     private lateinit var performanceStore: PerformanceStore
 
     @Test

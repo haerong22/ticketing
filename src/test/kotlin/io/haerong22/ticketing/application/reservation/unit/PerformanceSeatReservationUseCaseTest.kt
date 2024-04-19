@@ -3,17 +3,14 @@ package io.haerong22.ticketing.application.reservation.unit
 import io.haerong22.ticketing.application.reservation.PerformanceSeatReservationUseCase
 import io.haerong22.ticketing.application.reservation.command.ReservationCommand
 import io.haerong22.ticketing.domain.common.enums.SeatStatus
-import io.haerong22.ticketing.domain.performance.PerformanceReader
-import io.haerong22.ticketing.domain.performance.PerformanceStore
+import io.haerong22.ticketing.domain.performance.PerformanceService
 import io.haerong22.ticketing.domain.performance.Seat
-import io.haerong22.ticketing.domain.reservation.Reservation
-import io.haerong22.ticketing.domain.reservation.ReservationStore
+import io.haerong22.ticketing.domain.reservation.ReservationService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.any
 import org.mockito.kotlin.given
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -25,13 +22,10 @@ class PerformanceSeatReservationUseCaseTest {
     private lateinit var sut: PerformanceSeatReservationUseCase
 
     @Mock
-    private lateinit var performanceReader: PerformanceReader
+    private lateinit var performanceService: PerformanceService
 
     @Mock
-    private lateinit var performanceStore: PerformanceStore
-
-    @Mock
-    private lateinit var reservationStore: ReservationStore
+    private lateinit var reservationService: ReservationService
 
     @Test
     fun `좌석을 예약할 수 있다`() {
@@ -46,14 +40,14 @@ class PerformanceSeatReservationUseCaseTest {
             status = SeatStatus.OPEN
         )
 
-        given(performanceReader.getSeatWithLock(seatId)).willReturn(seat)
+        given(performanceService.getSeatWithLock(seatId)).willReturn(seat)
 
         // when
         sut(command)
 
         // then
-        verify(performanceReader, times(1)).getSeatWithLock(1L)
-        verify(performanceStore, times(1)).save(any())
-        verify(reservationStore, times(1)).save(any<Reservation>())
+        verify(performanceService, times(1)).getSeatWithLock(1L)
+        verify(performanceService, times(1)).reserve(seat)
+        verify(reservationService, times(1)).reserve(1L, 1L, 10000)
     }
 }

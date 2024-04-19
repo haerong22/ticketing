@@ -2,7 +2,7 @@ package io.haerong22.ticketing.application.performance.unit
 
 import io.haerong22.ticketing.application.performance.GetAvailableSeatListUseCase
 import io.haerong22.ticketing.domain.common.enums.SeatStatus
-import io.haerong22.ticketing.domain.performance.PerformanceReader
+import io.haerong22.ticketing.domain.performance.PerformanceService
 import io.haerong22.ticketing.domain.performance.Seat
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -21,7 +21,7 @@ class GetAvailableSeatListUseCaseTest {
     private lateinit var sut: GetAvailableSeatListUseCase
 
     @Mock
-    private lateinit var performanceReader: PerformanceReader
+    private lateinit var performanceService: PerformanceService
 
     @Test
     fun `예약 가능한 좌석 리스트 조회`() {
@@ -37,14 +37,14 @@ class GetAvailableSeatListUseCaseTest {
             )
         )
 
-        given(performanceReader.getAvailableSeatList(performanceScheduleId))
+        given(performanceService.getAvailableSeatList(performanceScheduleId))
             .willReturn(expected)
 
         // when
         val result = sut(performanceScheduleId)
 
         // then
-        verify(performanceReader, times(1)).getAvailableSeatList(performanceScheduleId)
+        verify(performanceService, times(1)).getAvailableSeatList(performanceScheduleId)
         assertThat(result).hasSize(1)
         assertThat(result[0].seatId).isEqualTo(1L)
         assertThat(result[0].seatNo).isEqualTo(1)

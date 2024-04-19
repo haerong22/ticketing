@@ -1,15 +1,15 @@
 package io.haerong22.ticketing.application.performance
 
-import io.haerong22.ticketing.domain.performance.PerformanceReader
+import io.haerong22.ticketing.domain.performance.PerformanceService
 import io.haerong22.ticketing.domain.performance.Seat
 import org.springframework.stereotype.Service
 
 @Service
 class GetAvailableSeatListUseCase(
-    private val performanceReader: PerformanceReader,
+    private val performanceService: PerformanceService,
 ) {
 
     operator fun invoke(performanceScheduleId: Long) : List<Seat> {
-        return performanceReader.getAvailableSeatList(performanceScheduleId)
+        return performanceService.getAvailableSeatList(performanceScheduleId)
     }
 }

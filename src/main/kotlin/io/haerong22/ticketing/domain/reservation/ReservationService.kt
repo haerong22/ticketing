@@ -14,6 +14,11 @@ class ReservationService(
         return reservationReader.getReservationWithLock(reservationId)
     }
 
+    fun reserve(userId: Long, seatId: Long, price: Int) {
+        val reservation = Reservation.reserve(userId, seatId, price)
+        reservationStore.save(reservation)
+    }
+
     fun pay(user: User, reservation: Reservation) {
         paymentValidator.validate(user, reservation)
 

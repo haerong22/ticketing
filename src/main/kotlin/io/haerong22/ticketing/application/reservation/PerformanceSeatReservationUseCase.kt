@@ -1,27 +1,21 @@
 package io.haerong22.ticketing.application.reservation
 
 import io.haerong22.ticketing.application.reservation.command.ReservationCommand
-import io.haerong22.ticketing.domain.performance.PerformanceReader
-import io.haerong22.ticketing.domain.performance.PerformanceStore
-import io.haerong22.ticketing.domain.reservation.Reservation
-import io.haerong22.ticketing.domain.reservation.ReservationStore
+import io.haerong22.ticketing.domain.performance.PerformanceService
+import io.haerong22.ticketing.domain.reservation.ReservationService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @Service
 class PerformanceSeatReservationUseCase(
-    private val performanceReader: PerformanceReader,
-    private val performanceStore: PerformanceStore,
-    private val reservationStore: ReservationStore,
+    private val performanceService: PerformanceService,
+    private val reservationService: ReservationService,
 ) {
 
     operator fun invoke(command: ReservationCommand.Reserve) {
-        var seat = performanceReader.getSeatWithLock(command.seatId)
-        seat = seat.reserve()
-        performanceStore.save(seat)
-
-        val reservation = Reservation.reserve(command.userId, command.seatId, seat.price)
-        reservationStore.save(reservation)
+        val seat = performanceService.getSeatWithLock(command.seatId)
+        performanceService.reserve(seat)
+        reservationService.reserve(command.userId, command.seatId, seat.price)
     }
 }
