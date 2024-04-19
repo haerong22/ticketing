@@ -17,6 +17,7 @@ class QueueService(
 
     fun getQueueStatus(token: String) : WaitingQueue {
         return queueReader.getQueueStatus(token)
+            ?: throw QueueException(QueueResponseCode.QUEUE_TOKEN_NOT_FOUND)
     }
 
     fun exit(token: String) {

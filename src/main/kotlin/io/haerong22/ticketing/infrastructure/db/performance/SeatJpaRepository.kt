@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
-import java.util.*
 
 interface SeatJpaRepository : JpaRepository<SeatEntity, Long> {
 
@@ -14,7 +13,7 @@ interface SeatJpaRepository : JpaRepository<SeatEntity, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from SeatEntity s where s.id=:seatId")
-    fun findByIdForUpdate(seatId: Long): Optional<SeatEntity>
+    fun findByIdForUpdate(seatId: Long): SeatEntity?
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("update SeatEntity s set s.status=:status where s.id in :seatIds")

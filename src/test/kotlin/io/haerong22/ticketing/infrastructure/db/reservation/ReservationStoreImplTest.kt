@@ -63,4 +63,43 @@ class ReservationStoreImplTest(
         assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(PaymentStatus.COMPLETE)
     }
+
+    @Test
+    fun `reservationId 리스트로 상태를 변경한다`() {
+        // given
+        reservationJpaRepository.saveAll(listOf(
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().minusMinutes(5),
+            ),
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().minusMinutes(5),
+            ),
+            ReservationEntity(
+                userId = 1L,
+                seatId = 1L,
+                price = 10000,
+                status = ReservationStatus.RESERVED,
+                expiredAt = LocalDateTime.now().plusMinutes(5),
+            )
+        ))
+
+        val ids = listOf(1L, 2L)
+
+        // when
+        sut.cancelExpiredReservation(ids)
+
+        // then
+        val result = reservationJpaRepository.findAll()
+        assertThat(result[0].status).isEqualTo(ReservationStatus.EXPIRED)
+        assertThat(result[1].status).isEqualTo(ReservationStatus.EXPIRED)
+        assertThat(result[2].status).isEqualTo(ReservationStatus.RESERVED)
+    }
 }

@@ -6,14 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
-import java.util.*
 
 interface QueueJpaRepository : JpaRepository<QueueEntity, Long> {
 
     @Query("select count(q.id) from QueueEntity q where q.id < :queueId and q.status = 'WAITING'")
     fun rank(queueId: Long): Int
 
-    fun findByToken(token: String): Optional<QueueEntity>
+    fun findByToken(token: String): QueueEntity?
 
     fun deleteByToken(token: String)
 

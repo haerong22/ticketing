@@ -1,5 +1,6 @@
 package io.haerong22.ticketing.domain.queue
 
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -8,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.given
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
+import java.util.*
 
 @ExtendWith(MockitoExtension::class)
 class QueueServiceTest {
@@ -42,5 +44,16 @@ class QueueServiceTest {
         verify(queueReader, times(1)).getActiveCount()
         verify(queueReader, times(1)).getTargetTokenIds(2)
         verify(queueStore, times(1)).activeTokens(listOf(49L, 50L))
+    }
+
+    @Test
+    fun `토큰 상태를 조회 시 해당 토큰이 없으면 QueueException 이 발생한다`() {
+        // given
+        val token = UUID.randomUUID().toString()
+
+        // when, then
+        assertThatThrownBy { sut.getQueueStatus(token) }
+            .isInstanceOf(QueueException::class.java)
+            .hasMessage("토큰이 없습니다.")
     }
 }

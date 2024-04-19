@@ -28,7 +28,7 @@ class ReservationJpaRepositoryTest(
         val reservationId = 1L
 
         // when
-        val result = reservationJpaRepository.findByIdForUpdate(reservationId).get()
+        val result = reservationJpaRepository.findByIdForUpdate(reservationId)
 
         // then
         assertThat(em.getLockMode(result)).isEqualTo(LockModeType.PESSIMISTIC_WRITE)

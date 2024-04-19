@@ -1,11 +1,9 @@
 package io.haerong22.ticketing.infrastructure.db.queue
 
 import io.haerong22.ticketing.domain.common.enums.QueueStatus
-import io.haerong22.ticketing.domain.queue.QueueException
 import io.haerong22.ticketing.domain.queue.QueueReader
 import io.haerong22.ticketing.infrastructure.DbTestSupport
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
 import org.springframework.data.domain.PageRequest
@@ -27,7 +25,7 @@ class QueueReaderImplTest(
         queueJpaRepository.save(QueueEntity(token = token, status = QueueStatus.WAITING))
 
         // when
-        val result = sut.getQueueStatus(token)
+        val result = sut.getQueueStatus(token)!!
 
         // then
         assertThat(result.queueId).isEqualTo(3L)
@@ -35,17 +33,6 @@ class QueueReaderImplTest(
         assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.token).isEqualTo(token)
         assertThat(result.expiredAt).isNull()
-    }
-
-    @Test
-    fun `토큰 상태를 조회 시 해당 토큰이 없으면 QueueException 이 발생한다`() {
-        // given
-        val token = UUID.randomUUID().toString()
-
-        // when, then
-        assertThatThrownBy { sut.getQueueStatus(token) }
-            .isInstanceOf(QueueException::class.java)
-            .hasMessage("토큰이 없습니다.")
     }
 
     @Test

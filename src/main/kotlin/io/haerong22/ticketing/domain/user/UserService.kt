@@ -11,10 +11,12 @@ class UserService(
 
     fun getUser(userId: Long) : User {
         return userReader.getUser(userId)
+            ?: throw UserException(UserResponseCode.NOT_FOUND_USER)
     }
 
     fun getUserWithLock(userId: Long) : User {
         return userReader.getUserWithPessimisticLock(userId)
+            ?: throw UserException(UserResponseCode.NOT_FOUND_USER)
     }
 
     fun chargePoint(user: User, amount: Int) : User {

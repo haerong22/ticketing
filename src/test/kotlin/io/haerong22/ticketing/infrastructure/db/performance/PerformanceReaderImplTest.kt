@@ -2,10 +2,8 @@ package io.haerong22.ticketing.infrastructure.db.performance
 
 import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.domain.common.enums.SeatStatus
-import io.haerong22.ticketing.domain.performance.PerformanceException
 import io.haerong22.ticketing.infrastructure.DbTestSupport
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.assertj.core.api.Assertions.tuple
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
@@ -86,7 +84,7 @@ class PerformanceReaderImplTest(
 
 
         // when
-        val result = sut.getPerformance(1L)
+        val result = sut.getPerformance(1L)!!
 
         // then
         assertThat(result.performanceId).isEqualTo(1L)
@@ -108,16 +106,6 @@ class PerformanceReaderImplTest(
                     LocalDateTime.of(2024, 4, 1, 17, 0, 0),
                 ),
             )
-    }
-
-    @Test
-    fun `공연 정보가 없으면 PerformanceException 이 발생한다`() {
-        // given
-
-        // when, then
-        assertThatThrownBy { sut.getPerformance(1L) }
-            .isInstanceOf(PerformanceException::class.java)
-            .hasMessage("공연을 찾을 수 없습니다.")
     }
 
     @Test

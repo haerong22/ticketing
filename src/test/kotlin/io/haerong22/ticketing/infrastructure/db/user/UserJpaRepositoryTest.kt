@@ -24,7 +24,7 @@ class UserJpaRepositoryTest(
         val userId = 1L
 
         // when
-        val result = userJpaRepository.findByIdForUpdate(userId).get()
+        val result = userJpaRepository.findByIdForUpdate(userId)
 
         // then
         Assertions.assertThat(em.getLockMode(result)).isEqualTo(LockModeType.PESSIMISTIC_WRITE)

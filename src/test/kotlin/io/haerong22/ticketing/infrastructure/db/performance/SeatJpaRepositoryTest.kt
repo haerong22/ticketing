@@ -19,7 +19,7 @@ class SeatJpaRepositoryTest(
         val seatId = 1L
 
         // when
-        val result = seatJpaRepository.findByIdForUpdate(seatId).get()
+        val result = seatJpaRepository.findByIdForUpdate(seatId)
 
         // then
         assertThat(em.getLockMode(result)).isEqualTo(LockModeType.PESSIMISTIC_WRITE)

@@ -1,5 +1,6 @@
 package io.haerong22.ticketing.domain.reservation
 
+import io.haerong22.ticketing.domain.reservation.ReservationResponseCode.RESERVATION_NOT_FOUND
 import io.haerong22.ticketing.domain.user.User
 import org.springframework.stereotype.Service
 
@@ -12,6 +13,7 @@ class ReservationService(
 
     fun getReservationWithLock(reservationId: Long) : Reservation {
         return reservationReader.getReservationWithLock(reservationId)
+            ?: throw ReservationException(RESERVATION_NOT_FOUND)
     }
 
     fun reserve(userId: Long, seatId: Long, price: Int) {

@@ -7,9 +7,9 @@ interface PerformanceReader {
 
     fun getPerformanceList(pageable: Pageable) : WithPage<Performance>
 
-    fun getPerformance(performanceId: Long): Performance
+    fun getPerformance(performanceId: Long): Performance?
 
     fun getAvailableSeatList(performanceScheduleId: Long): List<Seat>
 
-    fun getSeatWithLock(seatId: Long): Seat
+    fun getSeatWithLock(seatId: Long): Seat?
 }
