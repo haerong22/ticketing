@@ -7,6 +7,8 @@ plugins {
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
     kotlin("kapt") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "10.3.0"
 }
 
 group = "io.haerong22"
@@ -40,7 +42,7 @@ dependencies {
     runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation ("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
 }
 
 tasks.withType<KotlinCompile> {
