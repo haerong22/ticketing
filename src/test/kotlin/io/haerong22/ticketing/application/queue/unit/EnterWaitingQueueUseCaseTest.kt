@@ -49,5 +49,4 @@ class EnterWaitingQueueUseCaseTest {
         assertThat(result.status).isEqualTo(QueueStatus.WAITING)
         assertThat(result.expiredAt).isNull()
     }
-
 }

@@ -12,7 +12,7 @@ class PerformanceService(
     private val performanceStore: PerformanceStore,
 ) {
 
-    fun getPerformanceList(pageable: Pageable) : WithPage<Performance> {
+    fun getPerformanceList(pageable: Pageable): WithPage<Performance> {
         return performanceReader.getPerformanceList(pageable)
     }
 

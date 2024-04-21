@@ -6,7 +6,7 @@ import io.haerong22.ticketing.infrastructure.db.queue.QueueEntity
 import io.haerong22.ticketing.infrastructure.db.queue.QueueJpaRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.UUID
 
 class ExitWaitingQueueUseCaseTest(
     private val sut: ExitWaitingQueueUseCase,

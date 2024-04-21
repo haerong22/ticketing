@@ -62,7 +62,6 @@ class ReservationPaymentUseCaseTest(
         assertThat(errorCount).isEqualTo(2)
     }
 
-
     @Test
     fun `예약한 좌석을 결제한다`() {
         // given

@@ -6,5 +6,4 @@ data class Performance(
     val content: String,
 
     val schedules: List<PerformanceSchedule>? = null
-) {
-}
+)

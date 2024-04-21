@@ -46,7 +46,7 @@ class ReservationPaymentUseCaseTest {
         val command = ReservationCommand.Pay(userId = 1L, reservationId = 1L)
 
         given { userService.getUserWithLock(1L) }.willAnswer { user }
-        given { reservationService.getReservationWithLock(1L) } .willAnswer { reservation }
+        given { reservationService.getReservationWithLock(1L) }.willAnswer { reservation }
 
         // when
         sut(command)
@@ -55,5 +55,4 @@ class ReservationPaymentUseCaseTest {
         verify(userService, times(1)).getUserWithLock(1L)
         verify(reservationService, times(1)).getReservationWithLock(1L)
     }
-
 }

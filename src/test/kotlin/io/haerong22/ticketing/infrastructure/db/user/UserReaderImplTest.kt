@@ -25,5 +25,4 @@ class UserReaderImplTest(
         assertThat(result.name).isEqualTo("유저")
         assertThat(result.point.amount).isEqualTo(0)
     }
-
 }

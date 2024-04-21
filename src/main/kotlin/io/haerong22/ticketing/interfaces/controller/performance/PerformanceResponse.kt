@@ -20,7 +20,7 @@ class PerformanceResponse {
 
         companion object {
 
-            fun toResponse(seats: List<Seat>) : AvailableSeatList {
+            fun toResponse(seats: List<Seat>): AvailableSeatList {
                 return AvailableSeatList(
                     availableSeat = seats.map {
                         SeatInfo(
@@ -32,7 +32,6 @@ class PerformanceResponse {
                 )
             }
         }
-
     }
 
     class PerformanceList(
@@ -94,6 +93,4 @@ class PerformanceResponse {
             }
         }
     }
-
-
 }

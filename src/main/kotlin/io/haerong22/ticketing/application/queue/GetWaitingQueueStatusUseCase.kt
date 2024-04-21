@@ -9,7 +9,7 @@ class GetWaitingQueueStatusUseCase(
     private val queueService: QueueService,
 ) {
 
-    operator fun invoke(token: String) : WaitingQueue {
+    operator fun invoke(token: String): WaitingQueue {
         return queueService.getQueueStatus(token)
     }
 }

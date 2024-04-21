@@ -5,7 +5,7 @@ import io.haerong22.ticketing.domain.common.WithPage
 
 interface PerformanceReader {
 
-    fun getPerformanceList(pageable: Pageable) : WithPage<Performance>
+    fun getPerformanceList(pageable: Pageable): WithPage<Performance>
 
     fun getPerformance(performanceId: Long): Performance?
 

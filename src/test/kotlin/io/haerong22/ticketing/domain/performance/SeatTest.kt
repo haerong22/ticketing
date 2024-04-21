@@ -45,5 +45,4 @@ class SeatTest {
             .isInstanceOf(PerformanceException::class.java)
             .hasMessage("이미 예약된 좌석입니다.")
     }
-
 }

@@ -9,7 +9,7 @@ class GetAvailableSeatListUseCase(
     private val performanceService: PerformanceService,
 ) {
 
-    operator fun invoke(performanceScheduleId: Long) : List<Seat> {
+    operator fun invoke(performanceScheduleId: Long): List<Seat> {
         return performanceService.getAvailableSeatList(performanceScheduleId)
     }
 }

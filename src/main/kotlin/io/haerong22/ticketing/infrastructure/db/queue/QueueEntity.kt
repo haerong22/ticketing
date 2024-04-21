@@ -33,7 +33,7 @@ class QueueEntity(
         }
     }
 
-    fun toDomain(rank: Int) : WaitingQueue {
+    fun toDomain(rank: Int): WaitingQueue {
         return WaitingQueue(
             queueId = id!!,
             token = token,

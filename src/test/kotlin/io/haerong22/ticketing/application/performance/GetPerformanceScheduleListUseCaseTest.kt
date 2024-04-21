@@ -37,7 +37,6 @@ class GetPerformanceScheduleListUseCaseTest(
             )
         )
 
-
         // when
         val result = sut(1L)
 

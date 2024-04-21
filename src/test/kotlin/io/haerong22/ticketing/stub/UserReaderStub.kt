@@ -13,5 +13,4 @@ class UserReaderStub : UserReader {
     override fun getUserWithPessimisticLock(userId: Long): User {
         return User(1L, "유저1", UserPoint(10000))
     }
-
 }

@@ -6,8 +6,7 @@ import io.haerong22.ticketing.infrastructure.DbTestSupport
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
-import org.springframework.data.domain.PageRequest
-import java.util.*
+import java.util.UUID
 
 @Import(QueueReaderImpl::class)
 class QueueReaderImplTest(
@@ -44,8 +43,6 @@ class QueueReaderImplTest(
         val queue4 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
         val queue5 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
         queueJpaRepository.saveAll(listOf(queue1, queue2, queue3, queue4, queue5))
-
-        val pageable = PageRequest.of(0, 3)
 
         // when
         val result = sut.getActiveCount()

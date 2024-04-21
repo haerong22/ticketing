@@ -5,7 +5,7 @@ import io.haerong22.ticketing.domain.common.Pageable
 import io.haerong22.ticketing.infrastructure.db.performance.PerformanceEntity
 import io.haerong22.ticketing.infrastructure.db.performance.PerformanceJpaRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.groups.Tuple.*
+import org.assertj.core.groups.Tuple.tuple
 import org.junit.jupiter.api.Test
 
 class GetPerformanceListUseCaseTest(

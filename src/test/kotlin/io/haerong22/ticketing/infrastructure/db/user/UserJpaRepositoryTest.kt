@@ -16,7 +16,6 @@ class UserJpaRepositoryTest(
         userJpaRepository.count()
     }
 
-
     @Test
     fun `유저 조회 시 락을 획득한다`() {
         // given

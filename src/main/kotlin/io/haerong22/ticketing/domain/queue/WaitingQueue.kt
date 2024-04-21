@@ -12,7 +12,7 @@ data class WaitingQueue(
 ) {
 
     companion object {
-        fun enter(token: String) : WaitingQueue {
+        fun enter(token: String): WaitingQueue {
             return WaitingQueue(
                 token = token,
                 rank = 0,

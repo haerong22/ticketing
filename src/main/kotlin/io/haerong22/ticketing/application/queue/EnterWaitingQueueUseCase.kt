@@ -9,7 +9,7 @@ class EnterWaitingQueueUseCase(
     private val queueService: QueueService,
 ) {
 
-    operator fun invoke() : WaitingQueue {
+    operator fun invoke(): WaitingQueue {
         return queueService.enter()
     }
 }

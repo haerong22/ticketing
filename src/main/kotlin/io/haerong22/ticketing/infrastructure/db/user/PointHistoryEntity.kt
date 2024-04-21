@@ -22,7 +22,7 @@ class PointHistoryEntity(
 
     companion object {
 
-        fun of(user: User, userPointHistory: UserPointHistory) : PointHistoryEntity {
+        fun of(user: User, userPointHistory: UserPointHistory): PointHistoryEntity {
             return PointHistoryEntity(
                 userId = user.userId,
                 type = userPointHistory.type,

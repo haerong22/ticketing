@@ -35,5 +35,4 @@ class PerformanceStoreImplTest(
         assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(SeatStatus.OPEN)
     }
-
 }

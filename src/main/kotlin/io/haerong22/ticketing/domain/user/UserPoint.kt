@@ -23,5 +23,4 @@ data class UserPoint(
         if (after < 0) throw UserException(NOT_ENOUGH_BALANCE)
         return UserPoint(after)
     }
-
 }

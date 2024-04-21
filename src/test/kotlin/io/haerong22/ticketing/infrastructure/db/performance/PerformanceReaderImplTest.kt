@@ -82,7 +82,6 @@ class PerformanceReaderImplTest(
             )
         )
 
-
         // when
         val result = sut.getPerformance(1L)!!
 

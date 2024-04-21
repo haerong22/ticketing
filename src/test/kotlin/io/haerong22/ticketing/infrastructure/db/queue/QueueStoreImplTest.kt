@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.Import
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @Import(QueueStoreImpl::class)
 class QueueStoreImplTest(

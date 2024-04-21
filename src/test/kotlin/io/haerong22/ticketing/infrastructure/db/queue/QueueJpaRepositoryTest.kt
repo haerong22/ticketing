@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.springframework.data.domain.PageRequest
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 class QueueJpaRepositoryTest(
     private val queueJpaRepository: QueueJpaRepository,

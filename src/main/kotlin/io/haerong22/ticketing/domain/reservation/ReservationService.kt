@@ -11,7 +11,7 @@ class ReservationService(
     private val paymentValidator: PaymentValidator,
 ) {
 
-    fun getReservationWithLock(reservationId: Long) : Reservation {
+    fun getReservationWithLock(reservationId: Long): Reservation {
         return reservationReader.getReservationWithLock(reservationId)
             ?: throw ReservationException(RESERVATION_NOT_FOUND)
     }
@@ -31,7 +31,7 @@ class ReservationService(
         reservationStore.save(payment)
     }
 
-    fun cancelExpiredReservation() : List<Long> {
+    fun cancelExpiredReservation(): List<Long> {
         val reservations = reservationReader.getExpiredReservation()
         val reservationIds = reservations.map { it.reservationId }
         reservationStore.cancelExpiredReservation(reservationIds)

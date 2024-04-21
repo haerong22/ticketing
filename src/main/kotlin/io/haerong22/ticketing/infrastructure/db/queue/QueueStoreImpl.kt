@@ -19,7 +19,6 @@ class QueueStoreImpl(
                 val rank = queueJpaRepository.rank(it.id!!)
                 it.toDomain(rank)
             }
-
     }
 
     override fun exit(token: String) {

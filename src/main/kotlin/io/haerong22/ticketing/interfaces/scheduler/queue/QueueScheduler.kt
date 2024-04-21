@@ -17,5 +17,4 @@ class QueueScheduler(
     fun activeToken() {
         activeTokenUseCase(MAX_USER_COUNT)
     }
-
 }

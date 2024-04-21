@@ -9,17 +9,17 @@ class UserService(
     private val userStore: UserStore,
 ) {
 
-    fun getUser(userId: Long) : User {
+    fun getUser(userId: Long): User {
         return userReader.getUser(userId)
             ?: throw UserException(UserResponseCode.NOT_FOUND_USER)
     }
 
-    fun getUserWithLock(userId: Long) : User {
+    fun getUserWithLock(userId: Long): User {
         return userReader.getUserWithPessimisticLock(userId)
             ?: throw UserException(UserResponseCode.NOT_FOUND_USER)
     }
 
-    fun chargePoint(user: User, amount: Int) : User {
+    fun chargePoint(user: User, amount: Int): User {
         val charged = user.chargePoint(amount)
         userStore.saveUser(charged)
 
@@ -29,7 +29,7 @@ class UserService(
         return charged
     }
 
-    fun usePoint(user: User, amount: Int) : User {
+    fun usePoint(user: User, amount: Int): User {
         val used = user.usePoint(amount)
         userStore.saveUser(used)
 

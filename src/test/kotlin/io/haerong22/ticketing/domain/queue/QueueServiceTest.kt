@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.given
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import java.util.*
+import java.util.UUID
 
 @ExtendWith(MockitoExtension::class)
 class QueueServiceTest {

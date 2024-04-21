@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query
 
 interface SeatJpaRepository : JpaRepository<SeatEntity, Long> {
 
-    fun findByPerformanceScheduleIdAndStatus(scheduleId: Long, status: SeatStatus) : List<SeatEntity>
+    fun findByPerformanceScheduleIdAndStatus(scheduleId: Long, status: SeatStatus): List<SeatEntity>
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from SeatEntity s where s.id=:seatId")

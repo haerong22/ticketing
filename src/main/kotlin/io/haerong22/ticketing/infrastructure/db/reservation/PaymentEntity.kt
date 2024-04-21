@@ -25,7 +25,7 @@ class PaymentEntity(
         }
     }
 
-    fun toDomain() : Payment {
+    fun toDomain(): Payment {
         return Payment(
             paymentId = id!!,
             reservationId = reservationId,

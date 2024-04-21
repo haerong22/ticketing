@@ -15,7 +15,7 @@ class PerformanceScheduleEntity(
     val reservationAt: LocalDateTime,
 ) : BaseEntity() {
 
-    fun toDomain() : PerformanceSchedule {
+    fun toDomain(): PerformanceSchedule {
         return PerformanceSchedule(
             performanceScheduleId = id!!,
             startAt = startAt,

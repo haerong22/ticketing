@@ -12,7 +12,7 @@ class ChargeUserPointUseCase(
     private val userService: UserService,
 ) {
 
-    operator fun invoke(command: UserCommand.ChargePoint) : User {
+    operator fun invoke(command: UserCommand.ChargePoint): User {
         val user = userService.getUserWithLock(command.userId)
         return userService.chargePoint(user, command.amount)
     }

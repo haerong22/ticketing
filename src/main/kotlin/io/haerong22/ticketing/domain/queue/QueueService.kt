@@ -9,13 +9,13 @@ class QueueService(
     private val tokenGenerator: TokenGenerator,
 ) {
 
-    fun enter() : WaitingQueue {
+    fun enter(): WaitingQueue {
         val token = tokenGenerator.generate()
         val waitingQueue = WaitingQueue.enter(token)
         return queueStore.enter(waitingQueue)
     }
 
-    fun getQueueStatus(token: String) : WaitingQueue {
+    fun getQueueStatus(token: String): WaitingQueue {
         return queueReader.getQueueStatus(token)
             ?: throw QueueException(QueueResponseCode.QUEUE_TOKEN_NOT_FOUND)
     }

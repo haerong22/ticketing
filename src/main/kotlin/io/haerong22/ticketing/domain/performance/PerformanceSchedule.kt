@@ -7,5 +7,4 @@ data class PerformanceSchedule(
     val startAt: LocalDateTime,
     val endAt: LocalDateTime,
     val reservationAt: LocalDateTime,
-) {
-}
+)

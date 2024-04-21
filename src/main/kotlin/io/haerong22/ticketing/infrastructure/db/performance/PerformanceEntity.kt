@@ -12,7 +12,7 @@ class PerformanceEntity(
     val content: String,
 ) : BaseEntity() {
 
-    fun toDomain() : Performance {
+    fun toDomain(): Performance {
         return Performance(
             performanceId = id!!,
             title = title,

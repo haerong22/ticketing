@@ -9,7 +9,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import java.util.*
+import java.util.UUID
 
 @ExtendWith(MockitoExtension::class)
 class ExitWaitingQueueUseCaseTest {

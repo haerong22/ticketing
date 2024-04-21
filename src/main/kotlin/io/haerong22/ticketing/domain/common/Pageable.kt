@@ -1,6 +1,6 @@
 package io.haerong22.ticketing.domain.common
 
-import io.haerong22.ticketing.domain.common.CommonResponseCode.*
+import io.haerong22.ticketing.domain.common.CommonResponseCode.BAD_REQUEST
 
 class Pageable(
     val pageNo: Int,

@@ -9,5 +9,4 @@ class TicketingApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

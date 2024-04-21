@@ -30,7 +30,7 @@ class ReservationEntity(
         }
     }
 
-    fun toDomain() : Reservation {
+    fun toDomain(): Reservation {
         return Reservation(
             reservationId = id!!,
             userId = userId,

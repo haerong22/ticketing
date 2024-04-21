@@ -27,8 +27,8 @@ interface QueueJpaRepository : JpaRepository<QueueEntity, Long> {
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(
         "update QueueEntity q " +
-                "set q.status=:status, q.expiredAt=:expiredAt " +
-                "where q.id in :ids"
+            "set q.status=:status, q.expiredAt=:expiredAt " +
+            "where q.id in :ids"
     )
     fun updateStatusByIds(ids: List<Long>, status: QueueStatus, expiredAt: LocalDateTime): Int
 }

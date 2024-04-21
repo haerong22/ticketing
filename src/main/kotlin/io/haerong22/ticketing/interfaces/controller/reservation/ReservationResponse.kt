@@ -4,6 +4,5 @@ class ReservationResponse {
 
     data class ReserveSeat(
         val reservationId: Long,
-    ) {
-    }
+    )
 }
