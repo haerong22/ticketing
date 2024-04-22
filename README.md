@@ -2,6 +2,8 @@
 
 ---
 
+테스트
+
 ## 프로젝트 산출물
 #### [Flow chart](docs/FLOW.md)
 #### [Sequence diagram](docs/SEQUENCE.md)
