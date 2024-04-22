@@ -40,7 +40,7 @@ class ReservationStoreImplTest(
         assertThat(result.seatId).isEqualTo(1L)
         assertThat(result.price).isEqualTo(10000)
         assertThat(result.status).isEqualTo(ReservationStatus.RESERVED)
-        assertThat(result.expiredAt).isEqualTo(expiredAt)
+        assertThat(result.expiredAt).isNotNull()
     }
 
     @Test

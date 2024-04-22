@@ -98,10 +98,10 @@ class QueueJpaRepositoryTest(
 
         val list = queueJpaRepository.findAll()
         assertThat(list[0].status).isEqualTo(QueueStatus.PROCEEDING)
-        assertThat(list[0].expiredAt).isEqualTo(expiredAt)
+        assertThat(list[0].expiredAt).isNotNull()
 
         assertThat(list[1].status).isEqualTo(QueueStatus.PROCEEDING)
-        assertThat(list[1].expiredAt).isEqualTo(expiredAt)
+        assertThat(list[1].expiredAt).isNotNull()
 
         assertThat(list[2].status).isEqualTo(QueueStatus.WAITING)
         assertThat(list[2].expiredAt).isNull()

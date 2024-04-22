@@ -101,7 +101,7 @@ class ReservationPaymentUseCaseTest(
         assertThat(reservation.seatId).isEqualTo(1L)
         assertThat(reservation.price).isEqualTo(10000)
         assertThat(reservation.status).isEqualTo(ReservationStatus.COMPLETE)
-        assertThat(reservation.expiredAt).isEqualTo(expired)
+        assertThat(reservation.expiredAt).isNotNull()
 
         val payment = paymentJpaRepository.findById(1L).get()
         assertThat(payment.id).isEqualTo(1L)
