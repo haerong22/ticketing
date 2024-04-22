@@ -1,0 +1,53 @@
+name: PR - Lint & Test
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release/*
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      checks: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Lint Check
+        run: ./gradlew ktlintCheck
+
+      - name: Run Build & Test
+        run: ./gradlew clean build
+
+      - name: Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: 📋Test Results
+          files: 'build/test-results/test/TEST-*.xml'
+        if: always()
+
+      - name: Coverage Report
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          title: 📝 Test Coverage Report
+          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
+        if: always()
+
