@@ -7,5 +7,6 @@
 #### [Sequence diagram](docs/SEQUENCE.md)
 #### [ERD](docs/ERD.md)
 #### [API 명세](docs/API.md)
+#### [Git Branch 전략](docs/git-branch.md)
 
 ---
