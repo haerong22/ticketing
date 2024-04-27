@@ -6,11 +6,14 @@ import jakarta.persistence.EntityManager
 import jakarta.persistence.LockModeType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.context.annotation.Import
 import java.time.LocalDateTime
 
-class ReservationJpaRepositoryTest(
+@Import(ReservationCustomRepositoryImpl::class)
+class ReservationCustomRepositoryImplTest(
+    private val sut: ReservationCustomRepositoryImpl,
     private val reservationJpaRepository: ReservationJpaRepository,
-    private val em: EntityManager
+    private val em: EntityManager,
 ) : DbTestSupport() {
 
     @Test
@@ -28,51 +31,10 @@ class ReservationJpaRepositoryTest(
         val reservationId = 1L
 
         // when
-        val result = reservationJpaRepository.findByIdForUpdate(reservationId)
+        val result = sut.findByIdForUpdate(reservationId)
 
         // then
         assertThat(em.getLockMode(result)).isEqualTo(LockModeType.PESSIMISTIC_WRITE)
-    }
-
-    @Test
-    fun `만료된 예약 리스트를 조회한다`() {
-        // given
-        reservationJpaRepository.saveAll(
-            listOf(
-                ReservationEntity(
-                    userId = 1L,
-                    seatId = 1L,
-                    price = 10000,
-                    status = ReservationStatus.RESERVED,
-                    expiredAt = LocalDateTime.now().minusMinutes(5),
-                ),
-                ReservationEntity(
-                    userId = 1L,
-                    seatId = 1L,
-                    price = 10000,
-                    status = ReservationStatus.RESERVED,
-                    expiredAt = LocalDateTime.now().minusMinutes(5),
-                ),
-                ReservationEntity(
-                    userId = 1L,
-                    seatId = 1L,
-                    price = 10000,
-                    status = ReservationStatus.RESERVED,
-                    expiredAt = LocalDateTime.now().plusMinutes(5),
-                )
-            )
-        )
-
-        val status = ReservationStatus.RESERVED
-        val date = LocalDateTime.now()
-
-        // when
-        val result = reservationJpaRepository.findAllByStatusAndExpiredAtBefore(status, date)
-
-        // then
-        assertThat(result).hasSize(2)
-        assertThat(result[0].id).isEqualTo(1L)
-        assertThat(result[1].id).isEqualTo(2L)
     }
 
     @Test
@@ -108,7 +70,7 @@ class ReservationJpaRepositoryTest(
         val status = ReservationStatus.EXPIRED
 
         // when
-        reservationJpaRepository.updateStatus(ids, status)
+        sut.updateStatus(ids, status)
 
         // then
         val result = reservationJpaRepository.findAll()
