@@ -46,6 +46,9 @@ dependencies {
     // h2
     runtimeOnly("com.h2database:h2")
 
+    // mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
 }
