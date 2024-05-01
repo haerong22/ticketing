@@ -50,22 +50,4 @@ class QueueReaderImplTest(
         // then
         assertThat(result).isEqualTo(2)
     }
-
-    @Test
-    fun `대기 상태 토큰 리스트를 조회한다`() {
-        // given
-        val queue1 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.PROCEEDING)
-        val queue2 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.PROCEEDING)
-        val queue3 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
-        val queue4 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
-        val queue5 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
-        queueJpaRepository.saveAll(listOf(queue1, queue2, queue3, queue4, queue5))
-
-        // when
-        val result = sut.getTargetTokenIds(2)
-
-        // then
-        assertThat(result).hasSize(2)
-        assertThat(result).isEqualTo(listOf(3L, 4L))
-    }
 }

@@ -85,10 +85,10 @@ class QueueStoreImplTest(
         val queue3 = QueueEntity(token = UUID.randomUUID().toString(), status = QueueStatus.WAITING)
         queueJpaRepository.saveAll(listOf(queue1, queue2, queue3))
 
-        val targetIds = listOf(1L, 2L)
+        val targetCount = 2
 
         // when
-        sut.activeTokens(targetIds)
+        sut.activeTokens(targetCount)
 
         val list = queueJpaRepository.findAll()
         assertThat(list[0].status).isEqualTo(QueueStatus.PROCEEDING)

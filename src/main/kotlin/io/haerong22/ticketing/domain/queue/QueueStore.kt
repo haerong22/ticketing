@@ -8,5 +8,5 @@ interface QueueStore {
 
     fun clearExpiredToken()
 
-    fun activeTokens(targets: List<Long>)
+    fun activeTokens(targetCount: Int)
 }
