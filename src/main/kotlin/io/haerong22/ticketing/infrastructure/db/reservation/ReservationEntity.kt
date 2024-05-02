@@ -5,6 +5,7 @@ import io.haerong22.ticketing.domain.reservation.Reservation
 import io.haerong22.ticketing.infrastructure.db.BaseEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
+import jakarta.persistence.Version
 import java.time.LocalDateTime
 
 @Entity
@@ -16,6 +17,9 @@ class ReservationEntity(
     val status: ReservationStatus,
     val expiredAt: LocalDateTime,
 ) : BaseEntity() {
+
+    @Version
+    var version: Long = 0
 
     companion object {
 
