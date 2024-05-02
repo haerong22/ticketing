@@ -2,26 +2,60 @@ package io.haerong22.ticketing
 
 import jakarta.annotation.PreDestroy
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.core.io.ClassPathResource
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import redis.embedded.RedisServer
 import java.io.File
+import java.net.InetSocketAddress
+import java.net.Socket
 
-@TestConfiguration
+@Profile("test")
+@Configuration
 class EmbeddedRedis(
     @Value("\${spring.data.redis.port}")
-    private val port: Int
+    private val redisPort: Int
 ) {
+    private val host = "localhost"
+    private var port = redisPort
+
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory {
+        return LettuceConnectionFactory(host, port)
+    }
 
     private val redisServer: RedisServer =
         if (isArmMac()) {
-            RedisServer(port, redisForArmMac())
+            RedisServer(getPort(), redisForArmMac())
         } else {
-            RedisServer(port)
+            RedisServer(getPort())
         }
 
     init {
         redisServer.start()
+    }
+
+    private fun getPort(): Int {
+        for (p in 10000..65535) {
+            if (isAvailablePort(p)) {
+                port = p
+                return p
+            }
+        }
+
+        throw IllegalArgumentException("Not Found Available port")
+    }
+
+    private fun isAvailablePort(port: Int): Boolean {
+        return runCatching {
+            Socket().use { socket ->
+                socket.connect(InetSocketAddress("localhost", port), 1000)
+                false
+            }
+        }.getOrElse { true }
     }
 
     private fun isArmMac(): Boolean {
