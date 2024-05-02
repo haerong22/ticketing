@@ -1,29 +1,31 @@
 package io.haerong22.ticketing.application.queue
 
 import io.haerong22.ticketing.application.IntegrationTestSupport
-import io.haerong22.ticketing.domain.common.enums.QueueStatus
-import io.haerong22.ticketing.infrastructure.db.queue.QueueEntity
-import io.haerong22.ticketing.infrastructure.db.queue.QueueJpaRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.data.redis.core.RedisTemplate
 import java.util.UUID
 
 class ExitWaitingQueueUseCaseTest(
     private val sut: ExitWaitingQueueUseCase,
-    private val queueJpaRepository: QueueJpaRepository,
+    private val redisTemplate: RedisTemplate<String, String>,
 ) : IntegrationTestSupport() {
 
     @Test
     fun `대기열 퇴장`() {
         // given
+        val waitQueueKey = "queue:wait"
         val token = UUID.randomUUID().toString()
-        queueJpaRepository.save(QueueEntity(token = token, status = QueueStatus.WAITING))
+        val score = System.currentTimeMillis().toDouble()
+        redisTemplate.opsForZSet().add(waitQueueKey, UUID.randomUUID().toString(), score)
+        redisTemplate.opsForZSet().add(waitQueueKey, UUID.randomUUID().toString(), score + 1)
+        redisTemplate.opsForZSet().add(waitQueueKey, token, score + 2)
 
         // when
         sut(token)
 
         // then
-        val count = queueJpaRepository.count()
-        assertThat(count).isEqualTo(0)
+        val count = redisTemplate.opsForZSet().size(waitQueueKey)
+        assertThat(count).isEqualTo(2)
     }
 }

@@ -32,18 +32,15 @@ class QueueServiceTest {
         val maxUserCount = 50
         val activeUserCount = 48
         val targetCount = maxUserCount - activeUserCount
-        val targetIds = listOf(49L, 50L)
 
         given { queueReader.getActiveCount() }.willAnswer { activeUserCount }
-        given { queueReader.getTargetTokenIds(targetCount) }.willAnswer { targetIds }
 
         // when
         sut.activeTokens(maxUserCount)
 
         // then
         verify(queueReader, times(1)).getActiveCount()
-        verify(queueReader, times(1)).getTargetTokenIds(2)
-        verify(queueStore, times(1)).activeTokens(listOf(49L, 50L))
+        verify(queueStore, times(1)).activeTokens(targetCount)
     }
 
     @Test

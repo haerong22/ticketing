@@ -31,7 +31,6 @@ class QueueService(
     fun activeTokens(maxUserCount: Int) {
         val activeCount = queueReader.getActiveCount()
         val targetCount = maxUserCount - activeCount
-        val targets = queueReader.getTargetTokenIds(targetCount)
-        queueStore.activeTokens(targets)
+        queueStore.activeTokens(targetCount)
     }
 }
