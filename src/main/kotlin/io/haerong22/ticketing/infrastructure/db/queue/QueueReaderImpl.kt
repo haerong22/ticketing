@@ -3,9 +3,8 @@ package io.haerong22.ticketing.infrastructure.db.queue
 import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.QueueReader
 import io.haerong22.ticketing.domain.queue.WaitingQueue
-import org.springframework.stereotype.Repository
 
-@Repository
+// @Repository
 class QueueReaderImpl(
     private val queueJpaRepository: QueueJpaRepository,
 ) : QueueReader {

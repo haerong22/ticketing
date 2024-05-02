@@ -31,7 +31,6 @@ class QueueController(
     fun checkWaitingQueue(
         @QueueToken token: String,
     ): CommonResponse<QueueResponse.Info> {
-        println("token = $token")
         val result = getWaitingQueueStatusUseCase(token)
         return CommonResponse.ok(
             QueueResponse.Info.toResponse(result)
@@ -42,7 +41,7 @@ class QueueController(
     fun exitWaitingQueue(
         @QueueToken token: String,
     ): CommonResponse<Void> {
-        exitWaitingQueueUseCase.invoke(token)
+        exitWaitingQueueUseCase(token)
         return CommonResponse.ok()
     }
 }

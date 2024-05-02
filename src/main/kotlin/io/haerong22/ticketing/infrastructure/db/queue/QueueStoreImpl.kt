@@ -4,11 +4,10 @@ import io.haerong22.ticketing.domain.common.enums.QueueStatus
 import io.haerong22.ticketing.domain.queue.QueueStore
 import io.haerong22.ticketing.domain.queue.WaitingQueue
 import org.springframework.data.domain.PageRequest
-import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-@Repository
+// @Repository
 class QueueStoreImpl(
     private val queueJpaRepository: QueueJpaRepository,
 ) : QueueStore {
