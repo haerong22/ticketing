@@ -32,7 +32,7 @@ class ReservationPaymentUseCaseTest(
         // given
         val userEntity = UserEntity(
             name = "유저",
-            point = 10000,
+            point = 100000,
         )
         userJpaRepository.save(userEntity)
 
@@ -54,7 +54,10 @@ class ReservationPaymentUseCaseTest(
         )
 
         allOf(*futures)
-            .exceptionally { null }
+            .exceptionally {
+                println(it.localizedMessage)
+                null
+            }
             .join()
 
         // then

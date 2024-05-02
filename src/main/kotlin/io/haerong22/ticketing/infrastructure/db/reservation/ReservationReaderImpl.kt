@@ -12,7 +12,7 @@ class ReservationReaderImpl(
 ) : ReservationReader {
 
     override fun getReservationWithLock(reservationId: Long): Reservation? {
-        return reservationJpaRepository.findByIdForUpdate(reservationId)
+        return reservationJpaRepository.findById(reservationId).get()
             ?.toDomain()
     }
 
