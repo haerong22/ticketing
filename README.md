@@ -16,6 +16,63 @@
 
 ---
 
+## 성능 개선
+
+### 인덱스 설정
+- 25만 건 더미데이터 활용
+
+#### 예약 가능한 좌석 리스트 조회
+```sql
+select *
+from seat
+where performance_schedule_id = {id} and status = 'OPEN';
+```
+
+#### 카디널리티 수치 확인
+```sql
+SELECT
+    CONCAT(ROUND(COUNT(DISTINCT id) / COUNT(*) * 100, 2), '%') AS id_cardinality,
+    CONCAT(ROUND(COUNT(DISTINCT performance_schedule_id) / COUNT(*) * 100, 2), '%') AS performance_schedule_id_cardinality,
+    CONCAT(ROUND(COUNT(DISTINCT price) / COUNT(*) * 100, 2), '%') AS price_cardinality,
+    CONCAT(ROUND(COUNT(DISTINCT seat_no) / COUNT(*) * 100, 2), '%') AS seat_no_cardinality,
+    CONCAT(ROUND(COUNT(DISTINCT status) / COUNT(*) * 100, 2), '%') AS status_cardinality
+FROM seat;
+```
+![cardinality](docs/images/cardinality.png)
+
+#### 인덱스 생성
+```sql
+create index idx_performance_schedule_id_status on seat(performance_schedule_id, status);
+
+show index from seat;
+```
+![index](docs/images/index.png)
+
+#### 실행 계획
+```sql
+explain
+select *
+from seat
+where performance_schedule_id = {id} and status = 'OPEN';
+```
+
+[ 인덱스 생성 전 ]
+![explain](docs/images/explain_before.png)
+
+[ 인덱스 생성 후 ]
+![explain](docs/images/explain_after_1.png)
+![explain](docs/images/explain_after_2.png)
+
+#### Profiling
+```sql
+show profile cpu for query {query_id};
+```
+
+![profiling](docs/images/profiling.png)
+- 성능 개선 : `0.084201` -> `0.002176`
+
+---
+
 ## 동시성 제어
 
 ### 포인트 충전/사용

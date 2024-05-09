@@ -4,6 +4,8 @@ import io.haerong22.ticketing.domain.common.enums.ReservationStatus
 import io.haerong22.ticketing.domain.reservation.Reservation
 import io.haerong22.ticketing.infrastructure.db.BaseEntity
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import jakarta.persistence.Version
 import java.time.LocalDateTime
@@ -14,6 +16,8 @@ class ReservationEntity(
     val userId: Long,
     val seatId: Long,
     val price: Int,
+
+    @Enumerated(EnumType.STRING)
     val status: ReservationStatus,
     val expiredAt: LocalDateTime,
 ) : BaseEntity() {
