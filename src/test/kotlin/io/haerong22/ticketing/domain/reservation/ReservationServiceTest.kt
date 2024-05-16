@@ -27,6 +27,9 @@ class ReservationServiceTest {
     @Mock
     private lateinit var paymentValidator: PaymentValidator
 
+    @Mock
+    private lateinit var eventPublisher: ReservationEventPublisher
+
     @Test
     fun `만료된 예약을 취소하고 seatId 리스트를 응답한다`() {
         // given
