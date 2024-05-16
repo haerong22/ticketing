@@ -9,6 +9,7 @@ class ReservationService(
     private val reservationReader: ReservationReader,
     private val reservationStore: ReservationStore,
     private val paymentValidator: PaymentValidator,
+    private val reservationEventPublisher: ReservationEventPublisher,
 ) {
 
     fun getReservationWithLock(reservationId: Long): Reservation {
@@ -28,7 +29,9 @@ class ReservationService(
         reservationStore.save(paymentCompleted)
 
         val payment = Payment.pay(reservation.reservationId, reservation.price)
-        reservationStore.save(payment)
+        val saved = reservationStore.save(payment)
+
+        reservationEventPublisher.publish(PaymentCompletedEvent(reservation.reservationId, saved.paymentId))
     }
 
     fun cancelExpiredReservation(): List<Long> {
