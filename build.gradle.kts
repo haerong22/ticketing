@@ -53,6 +53,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
     testImplementation("com.github.codemonstur:embedded-redis:1.0.0")
+
+    // test container
+    testImplementation("org.testcontainers:testcontainers:1.19.8")
+    testImplementation("org.testcontainers:junit-jupiter:1.19.8")
 }
 
 tasks.withType<KotlinCompile> {
